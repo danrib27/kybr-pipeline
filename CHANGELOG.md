@@ -21,6 +21,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `CLAUDE.md` and `GEMINI.md`, which import `AGENTS.md` so that Claude
   Code and Gemini CLI read the same context as the other agents.
 - This `CHANGELOG.md`.
+- `docs/README.md`, in English: the index of the project
+  documentation. Pages not written yet are marked 🚧.
 
 ### Changed
 
