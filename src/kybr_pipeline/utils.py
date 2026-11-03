@@ -1,4 +1,7 @@
-from datetime import UTC, datetime
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+TIMEZONE = ZoneInfo("America/Belem")
 
 
 def calculate_refs(ref_ini: str, ref_fin: str) -> list[str]:
@@ -11,8 +14,8 @@ def calculate_refs(ref_ini: str, ref_fin: str) -> list[str]:
     Returns:
         A list of references between ref_ini and ref_fin.
     """
-    start_date = datetime.strptime(ref_ini, "%Y%m").replace(tzinfo=UTC)
-    end_date = datetime.strptime(ref_fin, "%Y%m").replace(tzinfo=UTC)
+    start_date = datetime.strptime(ref_ini, "%Y%m").replace(tzinfo=TIMEZONE)
+    end_date = datetime.strptime(ref_fin, "%Y%m").replace(tzinfo=TIMEZONE)
 
     if start_date > end_date:
         raise ValueError("ref_ini must be less than or equal to ref_fin.")
