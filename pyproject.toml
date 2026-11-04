@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-kybr-pipeline = "kybr_pipeline:main"
+kybr-pipeline = "kybr_pipeline.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.13.6,<0.14.0"]
