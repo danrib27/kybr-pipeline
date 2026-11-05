@@ -23,6 +23,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "pytest>=9.2.0",
     "ruff>=0.17.3",
     "types-boto3[s3]>=1.43.123",
     "types-humanfriendly>=10.0.1.20250319",
