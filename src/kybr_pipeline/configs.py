@@ -1,11 +1,18 @@
-"""Pipeline settings, read once from config.yaml when first imported."""
+"""Pipeline settings, read once from config.yaml when first imported.
 
+The file is `config.yaml` in the current directory, unless the
+`KYBR_PIPELINE_CONFIG` environment variable gives another path.
+"""
+
+import os
 from pathlib import Path
 
 import humanfriendly
 import yaml
 
-with Path("config.yaml").open() as f:
+CONFIG_PATH = Path(os.environ.get("KYBR_PIPELINE_CONFIG", "config.yaml"))
+
+with CONFIG_PATH.open() as f:
     _config = yaml.safe_load(f)
 
 BASE_URL: str = _config["requests"]["base_url"]
