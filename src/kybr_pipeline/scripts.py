@@ -22,16 +22,19 @@ def validate_ref(ref: str) -> None:
         ref: The reference, as 'YYYYMM'.
 
     Raises:
-        InvalidReferenceError: If the reference has another format or is
-            not a real month, such as '202413'.
+        InvalidReferenceError: If the reference has another format, such
+            as '20258', or is not a real month, such as '202413'.
     """
+    message = f"invalid reference {ref!r}: use YYYYMM"
     try:
-        datetime.strptime(ref, "%Y%m").replace(tzinfo=TIMEZONE)
+        month = datetime.strptime(ref, "%Y%m").replace(tzinfo=TIMEZONE)
 
     except ValueError as e:
-        raise InvalidReferenceError(
-            f"invalid reference {ref!r}: use YYYYMM"
-        ) from e
+        raise InvalidReferenceError(message) from e
+
+    # strptime's %m also takes one digit, so '20258' would pass.
+    if month.strftime("%Y%m") != ref:
+        raise InvalidReferenceError(message)
 
 
 def ingest_monthly(args: argparse.Namespace) -> None:
@@ -83,7 +86,8 @@ def ingest_snapshot(args: argparse.Namespace) -> None:
         pipeline.ingest(args.endpoint, today.strftime("%Y%m%d"))
 
     except requests.HTTPError as e:
-        if e.response.status_code not in MISSING_FILE_STATUS:
+        response = e.response
+        if response is None or response.status_code not in MISSING_FILE_STATUS:
             raise
 
         yesterday = today - timedelta(days=1)
