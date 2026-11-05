@@ -10,10 +10,10 @@ run:
 	uv run --env-file .env kybr-pipeline
 
 test:
-	pytest --lf -vv
+	uv run pytest --lf -vv
 
 lint:
-	ruff check
+	uv run ruff check
 
 format:
-	ruff check --fix
+	uv run ruff check --fix
