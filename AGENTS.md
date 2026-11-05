@@ -28,9 +28,7 @@ use `return None`.
 
 ## Project Structure
 
-- Put tests in `tests/test_main.py`.
-- Don't create new packages or new files without being asked.
-
+- Don't create, install, remove packages or files without being asked.
 - `src/kybr_pipeline/`: Python package (src layout, `uv_build`).
   The `kybr-pipeline` command runs `kybr_pipeline:main`.
 - `tests/`: automated tests. Each module in `src/kybr_pipeline/` have your own
