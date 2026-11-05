@@ -21,15 +21,12 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `CLAUDE.md` and `GEMINI.md`, which import `AGENTS.md` so that Claude
   Code and Gemini CLI read the same context as the other agents.
 - This `CHANGELOG.md`.
-- `docker-compose.yml` Airflow 3.3.2 stack with the `LocalExecutor`:
-  `airflow-init` runs the database migrations, then `airflow-apiserver`
-  (UI and API on port 8081), `airflow-scheduler` and
-  `airflow-dag-processor` start. Airflow keeps its metadata in a
-  dedicated Postgres service, `airflow-db`, on its own network, so it
-  stays apart from the pipeline database. DAGs, logs and plugins are
-  mounted from `dags/`, `logs/` and `plugins/`.
-- `.env-sample`: the `AIRFLOW_UID`, `AIRFLOW_DB_*` and
-  `AIRFLOW_JWT_SECRET` variables the Airflow services need.
+- `docker-compose.yml` with the pipeline database: `db` runs
+  Postgres 18 and keeps its data in the `postgres_data` volume, and
+  `adminer` serves a web UI for it on port 8080. Both share the
+  `db_network` network.
+- `.env-sample`: the `POSTGRES_USER`, `POSTGRES_PASSWORD` and
+  `POSTGRES_DB` variables the `db` service reads from `.env`.
 - Ruff lint configuration in `pyproject.toml`: 79 column lines,
   Python 3.12 target and Google-style docstrings. Besides the default
   pycodestyle and Pyflakes rules, it enables isort, naming, pyupgrade,
@@ -79,8 +76,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `kybr_pipeline.Pipeline`, which uses `kybr_pipeline.configs`. Its
   `ingest` method downloads one Portal da Transparência endpoint for one
   reference and uploads the zip file to S3. Each run uses its own
-  temporary directory inside `tmp_dir`, removed at the end, so the
-  runs Airflow starts in parallel don't overwrite each other's files.
+  temporary directory inside `tmp_dir`, removed at the end, so runs
+  in parallel don't overwrite each other's files.
 - `docs/README.md`, in English: the index of the project
   documentation. Pages not written yet are marked 🚧.
 - pytest in the `dev` dependency group, and the first tests, which run
@@ -103,6 +100,10 @@ and the project uses [Semantic Versioning](https://semver.org/).
   - `tests/conftest.py`: the fake `Pipeline` that the CLI and scripts
     tests share, and `KYBR_PIPELINE_CONFIG` pointing at the project's
     `config.yaml`, so pytest runs from any directory.
+- `.github/workflows/ci.yml`: a GitHub Actions workflow that runs
+  on every pull request and every push to `main`. It installs the
+  locked dependencies with uv, then runs `ruff check` and pytest. A
+  new push cancels the run still going on the same branch.
 
 ### Changed
 
