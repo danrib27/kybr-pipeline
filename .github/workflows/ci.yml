@@ -1,0 +1,40 @@
+# Lint and test every pull request and every push to main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push cancels the run still going on the same branch or PR.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Lint and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v5
+
+      # uv reads the Python version from .python-version.
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      # --locked fails if uv.lock is out of date with pyproject.toml.
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Lint
+        run: uv run ruff check --output-format=github
+
+      # The tests use fakes and a local HTTP server: no network or AWS.
+      - name: Test
+        run: uv run pytest -vv
