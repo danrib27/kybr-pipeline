@@ -2,7 +2,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from kybr_pipeline import configs
-from kybr_pipeline.ingest import download_file, upload_2_s3
+from kybr_pipeline.transfer import download_file, upload_2_s3
 
 
 class Pipeline:
