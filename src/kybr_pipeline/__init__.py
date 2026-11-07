@@ -29,7 +29,10 @@ class Pipeline:
 
         with TemporaryDirectory(dir=configs.TMP_DIR) as run_dir:
             output_path = download_file(url, Path(run_dir), configs.CHUNK_SIZE)
-            upload_2_s3(output_path, configs.BUCKET_NAME, output_path.name)
+
+            object_name = f'raw/{endpoint}/{output_path.name}'
+
+            upload_2_s3(output_path, configs.BUCKET_NAME, object_name)
 
     def etl(self) -> None:
         """Extract, transform and load the downloaded data.
