@@ -96,8 +96,6 @@ AGENTS.override.md
 
 # --- Editores / SO ---
 .vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
 .idea/
 *.swp
 *~
