@@ -1,0 +1,10 @@
+requests:
+  base_url: https://portaldatransparencia.gov.br/download-de-dados
+  endpoints:
+    monthly: [compras, licitacoes]  # one file per month, history kept
+    snapshot: [ceis, cnep]  # only the latest day's file is kept
+  chunk_size: 1MiB  # 1MiB = 1024 * 1024 bytes; 1MB = 1000 * 1000 bytes.
+  tmp_dir: /tmp/kybr_pipeline
+
+s3:
+  bucket_name: aws-s3-kybr

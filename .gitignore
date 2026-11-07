@@ -1,0 +1,104 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Testes / cobertura
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# Linters / type checkers
+.mypy_cache/
+.ruff_cache/
+.pyright/
+.dmypy.json
+
+# Jupyter
+.ipynb_checkpoints/
+
+# --- Segredos / configuração local ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+service-account*.json
+
+# --- Dados do pipeline (não versionar dados brutos/processados) ---
+data/
+*.csv
+!dbt/seeds/**/*.csv
+*.parquet
+*.zip
+*.gz
+*.duckdb
+*.duckdb.wal
+*.db
+*.sqlite
+logs/
+*.log
+
+# --- Infra (Terraform) ---
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# --- Agentes de IA (só arquivos locais/pessoais) ---
+# Versionados de propósito: CLAUDE.md, AGENTS.md, GEMINI.md,
+# .claude/settings.json, .claude/commands/, .claude/agents/, .mcp.json,
+# .cursor/rules/, .github/copilot-instructions.md
+
+# Claude Code
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/worktrees/
+
+# Codex
+AGENTS.override.md
+
+# Aider
+.aider*
+
+# Cursor
+.cursor/mcp.json
+
+# Histórico de chats / caches de ferramentas
+.specstory/
+.serena/cache/
+
+# --- Editores / SO ---
+.vscode/*
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
