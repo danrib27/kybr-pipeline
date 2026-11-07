@@ -104,6 +104,14 @@ and the project uses [Semantic Versioning](https://semver.org/).
   on every pull request and every push to `main`. It installs the
   locked dependencies with uv, then runs `ruff check` and pytest. A
   new push cancels the run still going on the same branch.
+- `rustfs` service in `docker-compose.yml`: an S3 compatible object
+  store for development, with the S3 API on port 9000 and the web
+  console on port 9001, keeping its data in the `rustfs_data` volume.
+  `rustfs-init` creates the bucket (`S3_BUCKET`, by default the one in
+  `config.yaml`) once RustFS answers. Setting `AWS_ENDPOINT_URL`
+  points the pipeline at RustFS, since boto3 reads it on its own.
+- `.env-sample`: `RUSTFS_ACCESS_KEY`, `RUSTFS_SECRET_KEY`, `S3_BUCKET`
+  and a commented `AWS_ENDPOINT_URL` for `make run` against RustFS.
 
 ### Changed
 
@@ -116,3 +124,12 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `README.md`: the project description is wrapped at 79 columns and the
   title is followed by a blank line, to follow the new line length rule
   and the Markdown lint rule that requires blank lines around headings.
+
+### Removed
+
+- The `db` (Postgres) and `adminer` services, the `postgres_data`
+  volume and the `db_network` network from `docker-compose.yml`, and
+  the `POSTGRES_*` variables from `.env-sample`. The marts will be
+  Iceberg tables on S3, registered in the Glue Catalog and built by
+  dbt through Athena (`dbt-athena`), so the project has no database
+  of its own.

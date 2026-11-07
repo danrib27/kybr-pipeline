@@ -1,27 +1,36 @@
 services:
-  db:
-    image: postgres:18
-    container_name: kybr-db-postgres
+  rustfs:
+    image: rustfs/rustfs:1.0.3
+    container_name: kybr-rustfs
     restart: unless-stopped
-    env_file: .env
-    volumes:
-      - postgres_data:/var/lib/postgresql
-    networks:
-      - db_network
-
-  adminer:
-    image: adminer
-    container_name: kybr-adminer
-    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${RUSTFS_ACCESS_KEY:-rustfsadmin}
+      RUSTFS_SECRET_KEY: ${RUSTFS_SECRET_KEY:-rustfsadmin}
+      RUSTFS_CONSOLE_ENABLE: "true"
     ports:
-      - 8080:8080
-    networks:
-      - db_network
+      - 9000:9000  # S3 API
+      - 9001:9001  # web console
+    volumes:
+      - rustfs_data:/data
 
-networks:
-  db_network:
-    driver: bridge
+  rustfs-init:
+    image: amazon/aws-cli:2.38.1
+    container_name: kybr-rustfs-init
+    environment:
+      AWS_ENDPOINT_URL: http://rustfs:9000
+      AWS_ACCESS_KEY_ID: ${RUSTFS_ACCESS_KEY:-rustfsadmin}
+      AWS_SECRET_ACCESS_KEY: ${RUSTFS_SECRET_KEY:-rustfsadmin}
+      AWS_REGION: us-east-1
+      BUCKET: ${S3_BUCKET:-aws-s3-kybr}
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        until aws s3 ls > /dev/null 2>&1; do sleep 1; done
+        aws s3api head-bucket --bucket "$$BUCKET" 2> /dev/null \
+          || aws s3 mb "s3://$$BUCKET"
+    depends_on:
+      - rustfs
 
 volumes:
-  postgres_data:
+  rustfs_data:
     driver: local
