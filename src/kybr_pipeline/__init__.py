@@ -23,14 +23,14 @@ class Pipeline:
                 or `configs.SNAPSHOT_ENDPOINTS`.
             ref: The reference, as 'YYYYMM' or 'YYYYMMDD'.
         """
-        url = f'{configs.BASE_URL}/{endpoint}/{ref}'
+        url = f"{configs.BASE_URL}/{endpoint}/{ref}"
 
         configs.TMP_DIR.mkdir(parents=True, exist_ok=True)
 
         with TemporaryDirectory(dir=configs.TMP_DIR) as run_dir:
             output_path = download_file(url, Path(run_dir), configs.CHUNK_SIZE)
 
-            object_name = f'raw/{endpoint}/{output_path.name}'
+            object_name = f"raw/{endpoint}/{output_path.name}"
 
             upload_2_s3(output_path, configs.BUCKET_NAME, object_name)
 

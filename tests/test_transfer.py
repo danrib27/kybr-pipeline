@@ -27,9 +27,7 @@ class PortalHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/download-de-dados/compras/202508":
             self.send_response(HTTPStatus.FOUND)
-            self.send_header(
-                "Location", "/saida/compras/202508_Compras.zip"
-            )
+            self.send_header("Location", "/saida/compras/202508_Compras.zip")
             self.end_headers()
 
         elif self.path == "/saida/compras/202508_Compras.zip":
