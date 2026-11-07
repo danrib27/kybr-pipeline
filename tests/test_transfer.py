@@ -154,14 +154,15 @@ def test_upload_2_s3_uploads_the_file(s3):
     """The file goes to the given bucket under the given name.
 
     Checks that:
-    - the S3 client is created for the `us-east-1` region;
+    - the S3 client is created without a fixed region, so boto3 reads
+      it from `AWS_REGION`;
     - `upload_file` gets the path as a string, the bucket and the key.
     """
     client, clients = s3
 
     transfer.upload_2_s3(Path("/data/a.zip"), "bucket", "key.zip")
 
-    assert clients == [{"service_name": "s3", "region_name": "us-east-1"}]
+    assert clients == [{"service_name": "s3"}]
     assert client.uploads == [("/data/a.zip", "bucket", "key.zip")]
 
 

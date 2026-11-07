@@ -33,10 +33,3 @@ class Pipeline:
             object_name = f"raw/{endpoint}/{output_path.name}"
 
             upload_2_s3(output_path, configs.BUCKET_NAME, object_name)
-
-    def etl(self) -> None:
-        """Extract, transform and load the downloaded data.
-
-        Extract data from the temporary location, transform it, and load it
-        into the database.
-        """

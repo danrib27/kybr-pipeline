@@ -24,7 +24,7 @@ suppliers.
 ## Tech stack
 
 Python · AWS (S3, Glue, Athena) · Apache Iceberg · DuckDB / Polars · dbt ·
-Dagster · Terraform · Docker · GitHub Actions
+Airflow · Terraform · Docker · GitHub Actions
 
 > **Status:** 🚧 work in progress. See the [roadmap](#roadmap) for what is
 > already built.

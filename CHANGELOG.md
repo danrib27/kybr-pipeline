@@ -9,9 +9,9 @@ and the project uses [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Initial project structure created with uv: the `kyb_brazil_pipeline`
+- Initial project structure created with uv: the `kybr_pipeline`
   package in the src layout, `pyproject.toml` and `.python-version`,
-  which pins Python 3.10 for local development.
+  which pins Python 3.12 for local development.
 - `.gitignore` covering Python artifacts, secrets, pipeline data files,
   Terraform state, editor files and the local files of AI coding agents.
 - `AGENTS.md` with the project context and the first contribution
@@ -113,6 +113,15 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `.env-sample`: `RUSTFS_ACCESS_KEY`, `RUSTFS_SECRET_KEY`, `S3_BUCKET`
   and a commented `AWS_ENDPOINT_URL` for `make run` against RustFS.
 
+- `CONTRIBUTING.md`: setup with uv and the local RustFS, the `make`
+  targets and the branch, test, changelog and commit workflow.
+- `docs/decisions.md`: ADR-002, which moves the orchestration from
+  Dagster to Airflow. DAG runs per data interval track the processed
+  batches and `airflow dags backfill` replaces Dagster partitions.
+- `.gitignore`: dbt seeds (`dbt/seeds/**/*.csv`) stay versioned,
+  although other CSV files are ignored.
+- `AWS_REGION` in `.env-sample`.
+
 ### Changed
 
 - Dates use the `America/Belem` timezone, exported as
@@ -125,6 +134,24 @@ and the project uses [Semantic Versioning](https://semver.org/).
   title is followed by a blank line, to follow the new line length rule
   and the Markdown lint rule that requires blank lines around headings.
 
+- `requires-python` is now `>=3.12`, matching `.python-version` and
+  the Ruff target. `uv.lock` dropped the `tomli` and
+  `typing-extensions` backports that only Python 3.10 and 3.11 needed.
+- `upload_2_s3` no longer pins `us-east-1`: boto3 reads the region from
+  `AWS_REGION`, as it reads `AWS_ENDPOINT_URL`.
+- `make test` runs the whole suite instead of only the tests that
+  failed last time (`--lf`), and `make format` now also runs
+  `ruff format` after `ruff check --fix`.
+- `README.md` lists Airflow instead of Dagster in the tech stack.
+- The code and the tests are formatted with `ruff format`: double
+  quotes and its line wrapping.
+- `docs/README.md`: the Docker item now refers to the local RustFS,
+  and Data Modeling (`data-model.md`) covers the raw, bronze and gold
+  layers and the dbt marts instead of ER diagrams.
+- `AGENTS.md`: the entry point is `kybr_pipeline.cli:main`.
+- `test_init.py` expects the S3 key under `raw/<endpoint>/`, the
+  naming that `Pipeline.ingest` uses since the upload fix.
+
 ### Removed
 
 - The `db` (Postgres) and `adminer` services, the `postgres_data`
@@ -133,3 +160,9 @@ and the project uses [Semantic Versioning](https://semver.org/).
   Iceberg tables on S3, registered in the Glue Catalog and built by
   dbt through Athena (`dbt-athena`), so the project has no database
   of its own.
+- The empty `Pipeline.etl` method: dbt builds the tables through
+  Athena, so the package only ingests.
+- The Pydantic rule from `AGENTS.md`: the project has no API or
+  request bodies.
+- The API Specification and Code of Conduct items from
+  `docs/README.md`.

@@ -23,14 +23,13 @@ use `return None`.
 - Prefer f-strings over `str.format()` or `%` formatting.
 - Follow EAFP: handle exceptions rather than checking conditions up front.
 - Write Google-style docstrings for every public function and method.
-- Validate request bodies with Pydantic models.
 - Embrace idiomatic Python like comprehensions, generators, and decorators.
 
 ## Project Structure
 
 - Don't create, install, remove packages or files without being asked.
 - `src/kybr_pipeline/`: Python package (src layout, `uv_build`).
-  The `kybr-pipeline` command runs `kybr_pipeline:main`.
+  The `kybr-pipeline` command runs `kybr_pipeline.cli:main`.
 - `tests/`: automated tests. Each module in `src/kybr_pipeline/` have your own
 test file with `test_*.py` prefix.
 - `infra/`: infrastructure as code.

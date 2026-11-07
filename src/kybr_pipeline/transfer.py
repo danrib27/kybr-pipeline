@@ -45,7 +45,8 @@ def upload_2_s3(file_path: Path, bucket_name: str, object_name: str) -> None:
     """Upload a file to an S3 bucket.
 
     The credentials come from the environment (`AWS_ACCESS_KEY_ID` and
-    `AWS_SECRET_ACCESS_KEY`) or from `~/.aws/credentials`.
+    `AWS_SECRET_ACCESS_KEY`) or from `~/.aws/credentials`, and the
+    region from `AWS_REGION`.
 
     Args:
         file_path: The local path of the file to upload.
@@ -56,7 +57,7 @@ def upload_2_s3(file_path: Path, bucket_name: str, object_name: str) -> None:
         RuntimeError: If the credentials are missing or S3 rejects the
             upload.
     """
-    s3_client = boto3.client(service_name="s3", region_name="us-east-1")
+    s3_client = boto3.client(service_name="s3")
     try:
         s3_client.upload_file(str(file_path), bucket_name, object_name)
     except (NoCredentialsError, ClientError) as e:

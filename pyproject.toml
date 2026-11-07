@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Daniel Duarte", email = "danielduarte.tech@gmail.com" }
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     "boto3>=1.43.123",
     "humanfriendly>=10.0",

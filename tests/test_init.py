@@ -66,7 +66,7 @@ def test_ingest_downloads_the_file_and_uploads_it_to_s3(tmp_dir, transfer):
         (
             run_dir / "202508_Compras.zip",
             configs.BUCKET_NAME,
-            "202508_Compras.zip",
+            "raw/compras/202508_Compras.zip",
             True,
         )
     ]
