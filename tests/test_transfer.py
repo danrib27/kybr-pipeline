@@ -1,8 +1,10 @@
 import threading
 import time
+from collections import Counter
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from typing import ClassVar
 
 import pytest
 import requests
@@ -13,6 +15,8 @@ from kybr_pipeline import transfer
 # Larger than the chunk size the tests use, so it takes many chunks.
 CONTENT = bytes(range(256)) * 40
 SLOW_SECONDS = 0.5
+# Failures of a `/flaky/<status>` route before it answers.
+FLAKY_FAILURES = 2
 
 
 class PortalHandler(BaseHTTPRequestHandler):
@@ -21,10 +25,20 @@ class PortalHandler(BaseHTTPRequestHandler):
     - `/download-de-dados/compras/202508` redirects to the zip file.
     - `/saida/compras/202508_Compras.zip` serves `CONTENT`.
     - `/slow` waits `SLOW_SECONDS` before it answers.
+    - `/flaky/<status>` answers `<status>` `FLAKY_FAILURES` times, then
+      serves `CONTENT` as `flaky.zip`.
+    - `/down/<status>` always answers `<status>`.
     - any other path answers 404.
+
+    `hits` counts the requests to each path, across the whole module.
     """
 
+    hits: ClassVar[Counter[str]] = Counter()
+
     def do_GET(self):
+        self.hits[self.path] += 1
+        route, _, status = self.path[1:].partition("/")
+
         if self.path == "/download-de-dados/compras/202508":
             self.send_response(HTTPStatus.FOUND)
             self.send_header("Location", "/saida/compras/202508_Compras.zip")
@@ -40,6 +54,23 @@ class PortalHandler(BaseHTTPRequestHandler):
             time.sleep(SLOW_SECONDS)
             self.send_response(HTTPStatus.OK)
             self.end_headers()
+
+        elif route == "flaky" and self.hits[self.path] <= FLAKY_FAILURES:
+            self.send_error(int(status))
+
+        elif route == "flaky":
+            self.send_response(HTTPStatus.FOUND)
+            self.send_header("Location", "/saida/flaky.zip")
+            self.end_headers()
+
+        elif self.path == "/saida/flaky.zip":
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Length", str(len(CONTENT)))
+            self.end_headers()
+            self.wfile.write(CONTENT)
+
+        elif route == "down":
+            self.send_error(int(status))
 
         else:
             self.send_error(HTTPStatus.NOT_FOUND)
@@ -85,36 +116,97 @@ def test_download_file_follows_the_redirect_and_keeps_its_name(
     assert list(tmp_path.iterdir()) == [output_path]
 
 
-def test_download_file_raises_on_an_http_error(portal_url, tmp_path):
-    """A reference the portal doesn't have fails before writing a file.
+@pytest.mark.parametrize("status", [403, 404])
+def test_download_file_fails_at_once_on_a_missing_file(
+    portal_url, tmp_path, status
+):
+    """A file the portal doesn't have fails at once, without retries.
 
     Checks that:
-    - `requests.HTTPError` is raised, carrying the 404 response that
-      `scripts.ingest_snapshot` reads to fall back to yesterday;
+    - `requests.HTTPError` is raised, carrying the 403 or 404 response
+      that `scripts.ingest_snapshot` reads to fall back to yesterday;
+    - the portal got a single request;
     - no partial file is left in the directory.
     """
-    url = f"{portal_url}/download-de-dados/compras/209901"
+    path = f"/down/{status}"
 
     with pytest.raises(requests.HTTPError) as excinfo:
-        transfer.download_file(url, tmp_path, chunk_size=100)
+        transfer.download_file(f"{portal_url}{path}", tmp_path, 100)
 
     response = excinfo.value.response
     assert response is not None
-    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.status_code == status
+    assert PortalHandler.hits[path] == 1
+    assert list(tmp_path.iterdir()) == []
+
+
+@pytest.mark.parametrize("status", sorted(transfer.RETRY_STATUS))
+def test_download_file_retries_a_transient_error(portal_url, tmp_path, status):
+    """A route that fails twice, then answers, is downloaded.
+
+    Checks that:
+    - the file is saved, with its content intact;
+    - the portal got the two failed requests and the good one.
+    """
+    path = f"/flaky/{status}"
+
+    output_path = transfer.download_file(
+        f"{portal_url}{path}", tmp_path, chunk_size=100, backoff_factor=0
+    )
+
+    assert output_path == tmp_path / "flaky.zip"
+    assert output_path.read_bytes() == CONTENT
+    assert PortalHandler.hits[path] == FLAKY_FAILURES + 1
+
+
+def test_download_file_raises_after_the_last_retry(portal_url, tmp_path):
+    """A transient error that doesn't go away fails after the retries.
+
+    Checks that:
+    - `requests.HTTPError` is raised with the last 503 response;
+    - the portal got the first try and every retry;
+    - no partial file is left in the directory.
+    """
+    path = "/down/503"
+
+    with pytest.raises(requests.HTTPError) as excinfo:
+        transfer.download_file(
+            f"{portal_url}{path}",
+            tmp_path,
+            chunk_size=100,
+            retries=2,
+            backoff_factor=0,
+        )
+
+    response = excinfo.value.response
+    assert response is not None
+    assert response.status_code == HTTPStatus.SERVICE_UNAVAILABLE
+    assert PortalHandler.hits[path] == 3
     assert list(tmp_path.iterdir()) == []
 
 
 def test_download_file_gives_up_after_the_timeout(portal_url, tmp_path):
     """A server slower than `timeout` makes the download give up.
 
-    Checks that the `timeout` argument reaches `requests`, which raises
-    `requests.Timeout`, and that no file is left in the directory.
+    Checks that:
+    - the `timeout` argument reaches `requests`;
+    - the timeout is retried, and once the retries run out
+      `requests.ConnectionError` is raised;
+    - no file is left in the directory.
     """
-    with pytest.raises(requests.Timeout):
+    before = PortalHandler.hits["/slow"]
+
+    with pytest.raises(requests.ConnectionError):
         transfer.download_file(
-            f"{portal_url}/slow", tmp_path, chunk_size=100, timeout=0.05
+            f"{portal_url}/slow",
+            tmp_path,
+            chunk_size=100,
+            timeout=0.05,
+            retries=1,
+            backoff_factor=0,
         )
 
+    assert PortalHandler.hits["/slow"] - before == 2
     assert list(tmp_path.iterdir()) == []
 
 

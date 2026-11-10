@@ -7,6 +7,36 @@ and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-09
+
+### Added
+
+- `kybr_pipeline.transfer.retry_session`, a `requests.Session` with an
+  `HTTPAdapter` and a `urllib3` `Retry`. It retries connection errors,
+  timeouts and the 429, 500, 502, 503 and 504 status in
+  `transfer.RETRY_STATUS`, with exponential backoff, and honors the
+  `Retry-After` header. 403 and 404 are not retried, so
+  `ingest snapshot` still falls back to yesterday at once.
+  ([#3](https://github.com/danrib27/kybr-pipeline/issues/3))
+- `tests/test_transfer.py`: `/flaky/<status>` and `/down/<status>`
+  routes in the fake portal, and tests that a route failing twice,
+  then answering, is downloaded; that 403 and 404 get a single
+  request; and that an error that persists raises `requests.HTTPError`
+  after the last retry.
+  ([#3](https://github.com/danrib27/kybr-pipeline/issues/3))
+
+### Changed
+
+- `download_file` goes through `retry_session`, so a transient portal
+  error no longer aborts a backfill. The new `retries` (5 by default)
+  and `backoff_factor` (1 second by default) arguments tune it. A
+  timeout that persists after the retries now raises
+  `requests.ConnectionError` instead of `requests.Timeout`.
+  ([#3](https://github.com/danrib27/kybr-pipeline/issues/3))
+- Version bumped to 0.2.0.
+
+## [0.1.0]
+
 ### Added
 
 - Initial project structure created with uv: the `kybr_pipeline`

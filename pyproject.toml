@@ -1,6 +1,6 @@
 [project]
 name = "kybr-pipeline"
-version = "0.1.0"
+version = "0.2.0"
 description = "Know-Your-Business Pipeline for Brazil."
 readme = "README.md"
 authors = [
