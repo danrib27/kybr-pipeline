@@ -14,18 +14,22 @@ and the project uses [Semantic Versioning](https://semver.org/).
   loggers log at the level in `LOG_LEVEL` (INFO by default), or at
   DEBUG with the new `-v`/`--verbose` flag. Other libraries log only
   warnings. An unknown `LOG_LEVEL` is a usage error.
-  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4))
+  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4),
+  [7eba53d](https://github.com/danrib27/kybr-pipeline/commit/7eba53dc182997ef63c14bc980013671df0df5e1))
 - `Pipeline.ingest` logs one INFO line per reference with the URL, the
   file name and size, the S3 object and the elapsed time, so a
   backfill shows one line per month. At DEBUG, `download_file`,
   `upload_2_s3` and the end of the download are logged too.
-  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4))
+  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4),
+  [7eba53d](https://github.com/danrib27/kybr-pipeline/commit/7eba53dc182997ef63c14bc980013671df0df5e1))
 - `ingest monthly` logs the range before it starts and the month that
   fails, and `ingest snapshot` warns when it falls back to yesterday.
-  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4))
+  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4),
+  [7eba53d](https://github.com/danrib27/kybr-pipeline/commit/7eba53dc182997ef63c14bc980013671df0df5e1))
 - Tests of the log messages with `caplog`, and `tests/test_logs.py`
   for the log level set by `LOG_LEVEL` and `--verbose`.
-  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4))
+  ([#4](https://github.com/danrib27/kybr-pipeline/issues/4),
+  [7eba53d](https://github.com/danrib27/kybr-pipeline/commit/7eba53dc182997ef63c14bc980013671df0df5e1))
 
 ## [0.2.0] - 2026-11-09
 
