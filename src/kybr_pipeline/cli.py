@@ -2,6 +2,7 @@ import argparse
 from importlib.metadata import version
 
 from kybr_pipeline import configs, scripts
+from kybr_pipeline.logs import configure_logging
 
 parser = argparse.ArgumentParser(
     prog="kybr-pipeline",
@@ -12,6 +13,12 @@ parser.add_argument(
     "--version",
     action="version",
     version=f"%(prog)s {version('kybr-pipeline')}",
+)
+parser.add_argument(
+    "-v",
+    "--verbose",
+    action="store_true",
+    help="log every step at DEBUG level; overrides LOG_LEVEL",
 )
 
 subparsers = parser.add_subparsers(dest="command", required=True)
@@ -69,6 +76,12 @@ def main() -> None:
     argument.
     """
     args = parser.parse_args()
+    try:
+        configure_logging(args.verbose)
+
+    except ValueError as e:
+        parser.error(f"invalid LOG_LEVEL: {e}")
+
     try:
         args.func(args)
 

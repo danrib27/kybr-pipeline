@@ -1,3 +1,5 @@
+import logging
+import re
 from pathlib import Path
 
 import pytest
@@ -99,3 +101,43 @@ def test_ingest_cleans_up_when_the_upload_fails(tmp_dir, transfer):
         Pipeline().ingest("compras", "202508")
 
     assert list(tmp_dir.iterdir()) == []
+
+
+def test_ingest_logs_one_line_with_the_result(tmp_dir, transfer, caplog):
+    """One INFO line has the URL, file, size, S3 object and elapsed time."""
+    caplog.set_level(logging.INFO, logger="kybr_pipeline")
+
+    Pipeline().ingest("compras", "202508")
+
+    [record] = caplog.records
+    assert record.levelno == logging.INFO
+    assert re.fullmatch(
+        rf"compras 202508: {configs.BASE_URL}/compras/202508"
+        rf" -> 202508_Compras\.zip \(3 bytes\)"
+        rf" -> s3://{configs.BUCKET_NAME}/raw/compras/202508_Compras\.zip"
+        r" in \d+\.\ds",
+        record.getMessage(),
+    )
+
+
+@pytest.mark.usefixtures("tmp_dir")
+def test_ingest_logs_the_download_at_debug(transfer, caplog):
+    caplog.set_level(logging.DEBUG, logger="kybr_pipeline")
+
+    Pipeline().ingest("compras", "202508")
+
+    assert re.fullmatch(
+        r"Downloaded 202508_Compras\.zip \(3 bytes\) in \d+\.\ds",
+        caplog.messages[0],
+    )
+
+
+@pytest.mark.usefixtures("tmp_dir")
+def test_ingest_logs_nothing_when_it_fails(transfer, caplog):
+    caplog.set_level(logging.DEBUG, logger="kybr_pipeline")
+    transfer.upload_error = RuntimeError("upload failed")
+
+    with pytest.raises(RuntimeError):
+        Pipeline().ingest("compras", "202508")
+
+    assert [r.levelno for r in caplog.records] == [logging.DEBUG]

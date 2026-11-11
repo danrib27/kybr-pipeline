@@ -1,4 +1,5 @@
 import argparse
+import logging
 from datetime import UTC, datetime
 from http import HTTPStatus
 
@@ -128,3 +129,44 @@ def test_ingest_snapshot_reraises_an_error_without_response(pipeline):
         scripts.ingest_snapshot(snapshot_args())
 
     assert pipeline.calls == [("ceis", "20261104")]
+
+
+def test_ingest_monthly_logs_the_range(pipeline, caplog):
+    caplog.set_level(logging.INFO, logger="kybr_pipeline")
+
+    scripts.ingest_monthly(monthly_args("202511", "202602"))
+
+    assert caplog.messages == [
+        "Ingesting compras: 4 month(s), 202511 to 202602"
+    ]
+
+
+def test_ingest_monthly_logs_the_month_that_fails(pipeline, caplog):
+    caplog.set_level(logging.INFO, logger="kybr_pipeline")
+    error = http_error(HTTPStatus.INTERNAL_SERVER_ERROR)
+    pipeline.errors["202512"] = error
+
+    with pytest.raises(requests.HTTPError):
+        scripts.ingest_monthly(monthly_args("202511", "202602"))
+
+    [record] = [r for r in caplog.records if r.levelno == logging.ERROR]
+    assert record.getMessage() == f"compras 202512 failed: {error!r}"
+    assert pipeline.calls == [("compras", "202511"), ("compras", "202512")]
+
+
+def test_ingest_snapshot_logs_the_fallback_to_yesterday(pipeline, caplog):
+    pipeline.errors["20261104"] = http_error(HTTPStatus.NOT_FOUND)
+
+    scripts.ingest_snapshot(snapshot_args())
+
+    [record] = caplog.records
+    assert record.levelno == logging.WARNING
+    assert record.getMessage() == (
+        "ceis 20261104 is not published (HTTP 404); falling back to 20261103"
+    )
+
+
+def test_ingest_snapshot_does_not_warn_without_a_fallback(pipeline, caplog):
+    scripts.ingest_snapshot(snapshot_args())
+
+    assert caplog.records == []

@@ -1,4 +1,5 @@
 import argparse
+import logging
 from datetime import datetime, timedelta
 from http import HTTPStatus
 
@@ -6,6 +7,8 @@ import requests
 
 from kybr_pipeline import Pipeline
 from kybr_pipeline.utils import TIMEZONE, calculate_refs
+
+logger = logging.getLogger(__name__)
 
 # Status the portal returns for a daily file that is not published.
 MISSING_FILE_STATUS = {HTTPStatus.FORBIDDEN, HTTPStatus.NOT_FOUND}
@@ -40,7 +43,9 @@ def validate_ref(ref: str) -> None:
 def ingest_monthly(args: argparse.Namespace) -> None:
     """Run `ingest monthly`: download every month in the range.
 
-    A missing reference defaults to the current month in Belém.
+    A missing reference defaults to the current month in Belém. Each
+    month logs one line with its result, and a failed month is logged
+    before its error stops the backfill.
 
     Args:
         args: The parsed command line, with `endpoint`, `ref_ini` and
@@ -63,10 +68,26 @@ def ingest_monthly(args: argparse.Namespace) -> None:
     except ValueError as e:
         raise InvalidReferenceError(str(e)) from e
 
+    logger.info(
+        "Ingesting %s: %d month(s), %s to %s",
+        args.endpoint,
+        len(references),
+        ref_ini,
+        ref_fin,
+    )
     pipeline = Pipeline()
 
     for ref in references:
-        pipeline.ingest(args.endpoint, ref)
+        try:
+            pipeline.ingest(args.endpoint, ref)
+
+        except Exception as e:
+            # The error is re-raised with its traceback, so only name
+            # it here instead of logging the traceback twice.
+            logger.error(  # noqa: TRY400
+                "%s %s failed: %r", args.endpoint, ref, e
+            )
+            raise
 
 
 def ingest_snapshot(args: argparse.Namespace) -> None:
@@ -74,7 +95,7 @@ def ingest_snapshot(args: argparse.Namespace) -> None:
 
     The portal keeps only the file of the latest published day, and
     today's file may not be out yet, so it tries today first and falls
-    back to yesterday.
+    back to yesterday, with a warning.
 
     Args:
         args: The parsed command line, with `endpoint`.
@@ -91,4 +112,11 @@ def ingest_snapshot(args: argparse.Namespace) -> None:
             raise
 
         yesterday = today - timedelta(days=1)
+        logger.warning(
+            "%s %s is not published (HTTP %d); falling back to %s",
+            args.endpoint,
+            today.strftime("%Y%m%d"),
+            response.status_code,
+            yesterday.strftime("%Y%m%d"),
+        )
         pipeline.ingest(args.endpoint, yesterday.strftime("%Y%m%d"))

@@ -1,3 +1,4 @@
+import logging
 import threading
 import time
 from collections import Counter
@@ -300,3 +301,20 @@ def test_upload_2_s3_lets_other_errors_through(s3):
 
     with pytest.raises(FileNotFoundError):
         transfer.upload_2_s3(Path("/data/a.zip"), "bucket", "key.zip")
+
+
+def test_download_file_logs_the_url_at_debug(portal_url, tmp_path, caplog):
+    caplog.set_level(logging.DEBUG, logger="kybr_pipeline")
+    url = f"{portal_url}/download-de-dados/compras/202508"
+
+    transfer.download_file(url, tmp_path, chunk_size=100)
+
+    assert f"Downloading {url}" in caplog.messages
+
+
+def test_upload_2_s3_logs_the_destination_at_debug(s3, caplog):
+    caplog.set_level(logging.DEBUG, logger="kybr_pipeline")
+
+    transfer.upload_2_s3(Path("/data/a.zip"), "bucket", "key.zip")
+
+    assert caplog.messages == ["Uploading /data/a.zip to s3://bucket/key.zip"]
