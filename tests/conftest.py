@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 
@@ -38,3 +39,16 @@ def pipeline(monkeypatch):
     fake = FakePipeline()
     monkeypatch.setattr("kybr_pipeline.scripts.Pipeline", fake)
     return fake
+
+
+@pytest.fixture
+def package_logger(monkeypatch):
+    """Give the `kybr_pipeline` logger, restoring its level afterwards.
+
+    `LOG_LEVEL` is removed from the environment, so the default applies.
+    """
+    monkeypatch.delenv("LOG_LEVEL", raising=False)
+    logger = logging.getLogger("kybr_pipeline")
+    level = logger.level
+    yield logger
+    logger.setLevel(level)

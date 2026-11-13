@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -6,6 +7,8 @@ import requests
 from botocore.exceptions import ClientError, NoCredentialsError
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
+
+logger = logging.getLogger(__name__)
 
 # Status of transient portal errors, worth another try.
 RETRY_STATUS = frozenset({429, 500, 502, 503, 504})
@@ -79,6 +82,7 @@ def download_file(
         requests.ConnectionError: If the server can't be reached or
             keeps timing out after the last retry.
     """
+    logger.debug("Downloading %s", url)
     with (
         retry_session(retries, backoff_factor) as session,
         session.get(url, stream=True, timeout=timeout) as response,
@@ -110,6 +114,9 @@ def upload_2_s3(file_path: Path, bucket_name: str, object_name: str) -> None:
         RuntimeError: If the credentials are missing or S3 rejects the
             upload.
     """
+    logger.debug(
+        "Uploading %s to s3://%s/%s", file_path, bucket_name, object_name
+    )
     s3_client = boto3.client(service_name="s3")
     try:
         s3_client.upload_file(str(file_path), bucket_name, object_name)
