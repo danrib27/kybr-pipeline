@@ -10,7 +10,7 @@
    uv sync
    ```
 
-3. Copy `.env-sample` to `.env` and fill in the variables.
+3. Copy `.env.example` to `.env` and fill in the variables.
 4. Start the local S3 (RustFS) if you don't want to upload to AWS:
 
    ```sh
@@ -36,7 +36,9 @@ never with `pip`.
 
 ## Workflow
 
-1. Branch from `main` as `feature/<name>`.
+1. Branch from `main` as `<type>/<name>`, where the type is the
+   Conventional Commits one: `feature/` (for `feat`), `fix/`, `chore/`
+   or `docs/`. For example, `docs/5-fix-broken-links`.
 2. Write the code with type hints and Google-style docstrings, in lines
    of at most 79 columns. Each module in `src/kybr_pipeline/` has its
    own `tests/test_<module>.py`.

@@ -30,6 +30,31 @@ and the project uses [Semantic Versioning](https://semver.org/).
   for the log level set by `LOG_LEVEL` and `--verbose`.
   ([#4](https://github.com/danrib27/kybr-pipeline/issues/4),
   [7eba53d](https://github.com/danrib27/kybr-pipeline/commit/7eba53dc182997ef63c14bc980013671df0df5e1))
+- `README.md`: a Roadmap section, which the status note already linked
+  to, with what is done and the planned work linked to its issues.
+  ([#5](https://github.com/danrib27/kybr-pipeline/issues/5),
+  [8930804](https://github.com/danrib27/kybr-pipeline/commit/893080475445c9d79ac1f18dc90e50a45003bc5f))
+
+### Changed
+
+- `README.md`: the Tech stack lists only what the code uses today; the
+  planned tools (Glue, Athena, Iceberg, DuckDB / Polars, dbt, Airflow,
+  Terraform) moved to the Roadmap.
+  ([#5](https://github.com/danrib27/kybr-pipeline/issues/5),
+  [8930804](https://github.com/danrib27/kybr-pipeline/commit/893080475445c9d79ac1f18dc90e50a45003bc5f))
+- `docs/README.md` links only to pages that exist. The others will be
+  added when they are written.
+  ([#5](https://github.com/danrib27/kybr-pipeline/issues/5),
+  [8930804](https://github.com/danrib27/kybr-pipeline/commit/893080475445c9d79ac1f18dc90e50a45003bc5f))
+- Branches are named `<type>/<name>` after the Conventional Commits
+  type (`feature/`, `fix/`, `chore/`, `docs/`), in `CONTRIBUTING.md`
+  and `AGENTS.md`.
+  ([#5](https://github.com/danrib27/kybr-pipeline/issues/5),
+  [8930804](https://github.com/danrib27/kybr-pipeline/commit/893080475445c9d79ac1f18dc90e50a45003bc5f))
+- `.env-sample` renamed to `.env.example`, matching the exception in
+  `.gitignore`.
+  ([#5](https://github.com/danrib27/kybr-pipeline/issues/5),
+  [8930804](https://github.com/danrib27/kybr-pipeline/commit/893080475445c9d79ac1f18dc90e50a45003bc5f))
 
 ## [0.2.0] - 2026-11-09
 
