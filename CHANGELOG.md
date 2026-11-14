@@ -39,10 +39,12 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `Version bump` CI job: a pull request fails if the version in
   `pyproject.toml` is not greater than the base branch's, or has no
   section in `CHANGELOG.md`.
-  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6),
+  [bd1860a](https://github.com/danrib27/kybr-pipeline/commit/bd1860abd46104a3791889a0b94f1e39c3d9fba5))
 - `make help`, the default goal, lists the `make` targets with a
   one-line description each.
-  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6),
+  [eda4faa](https://github.com/danrib27/kybr-pipeline/commit/eda4faad5f13314c429e1c38ff881eb98640fa32))
 
 ### Changed
 
@@ -67,14 +69,17 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `make run` passes the `ARGS` variable to the CLI, as in
   `make run ARGS="ingest monthly -l compras -i 202101 -f 202112"`, since
   the CLI needs a subcommand. Both are documented in `CONTRIBUTING.md`.
-  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6),
+  [eda4faa](https://github.com/danrib27/kybr-pipeline/commit/eda4faad5f13314c429e1c38ff881eb98640fa32))
 - `build/` joins the branch types in `AGENTS.md` and
   `CONTRIBUTING.md`, for build system changes such as the `Makefile`.
-  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6),
+  [eda4faa](https://github.com/danrib27/kybr-pipeline/commit/eda4faad5f13314c429e1c38ff881eb98640fa32))
 - Every pull request bumps the version with `uv version --bump` and
   gives it a section in `CHANGELOG.md`, in `AGENTS.md` and
   `CONTRIBUTING.md`.
-  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6),
+  [bd1860a](https://github.com/danrib27/kybr-pipeline/commit/bd1860abd46104a3791889a0b94f1e39c3d9fba5))
 - Version bumped to 0.2.1.
 
 ## [0.2.0] - 2026-11-09
