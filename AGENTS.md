@@ -27,7 +27,8 @@ asked.
 - Type-hint public functions and methods, including their return types. Don't
 use `return None`.
 - Use `pathlib` for path management. Don't use `os.path`.
-- Prefer f-strings over `str.format()` or `%` formatting.
+- Prefer f-strings over `str.format()` or `%` formatting, except in
+  logging calls, which take `%s` arguments (Ruff G004).
 - Follow EAFP: handle exceptions rather than checking conditions up front.
 - Write Google-style docstrings for every public function and method.
 - Embrace idiomatic Python like comprehensions, generators, and decorators.
@@ -51,3 +52,7 @@ commit and issue id.
 and used, changes.
 - Update `schemas.yml` (dbt) when a model, column or test is added,
 removed or altered.
+- Never change or remove a published ADR in `docs/decisions.md`, except
+  for small fixes (typos, links, wording) that keep its original
+  meaning. A new decision gets a new ADR, which amends or supersedes the
+  old one; the old ADR only gets its status updated.

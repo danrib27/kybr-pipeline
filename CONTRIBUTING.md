@@ -48,8 +48,9 @@ never with `pip`.
    Conventional Commits one: `feature/` (for `feat`), `fix/`, `build/`,
    `chore/` or `docs/`. For example, `docs/5-fix-broken-links`.
 2. Write the code with type hints and Google-style docstrings, in lines
-   of at most 79 columns. Each module in `src/kybr_pipeline/` has its
-   own `tests/test_<module>.py`.
+   of at most 79 columns. Use f-strings, except in logging calls,
+   which take `%s` arguments (Ruff G004). Each module in
+   `src/kybr_pipeline/` has its own `tests/test_<module>.py`.
 3. Run `make lint` and `make test` before committing.
 4. Record the change in `CHANGELOG.md`, and update `README.md` when what
    the project does or how it is used changes.
@@ -69,3 +70,33 @@ never with `pip`.
    and open a pull request. CI runs the lint and the tests on it, and
    fails if the version is not greater than the one on `main` or has no
    section in `CHANGELOG.md`.
+
+## Good practices
+
+### Test data
+
+Tests and local runs ingest a small sample, never the whole history:
+
+- **Monthly data sets** (`compras`, `licitacoes`): at most one quarter.
+  The sample is 2023-T2, the same months for both, so they can be
+  joined:
+
+  ```sh
+  make run ARGS="ingest monthly -l compras -i 202304 -f 202306"
+  make run ARGS="ingest monthly -l licitacoes -i 202304 -f 202306"
+  ```
+
+- **Daily data sets** (`ceis`, `cnep`): only one snapshot.
+- Ingest one endpoint at a time. The Portal da Transparência sits
+  behind a firewall that answers many requests in a row with a CAPTCHA
+  (HTTP 405) for some minutes.
+- The portal publishes the monthly files months late, and a month not
+  published yet answers HTTP 403.
+
+### Architecture decision records
+
+A published ADR in [`docs/decisions.md`](docs/decisions.md) is never
+changed or removed, except for small fixes (typos, links, wording) that
+keep its original meaning. A new or reversed decision gets a new ADR,
+which amends or supersedes the old one, and the old ADR only gets its
+status updated, as in "Accepted; amended by ADR-002".
