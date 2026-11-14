@@ -7,6 +7,32 @@ and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-14
+
+### Added
+
+- `docs/decisions.md`: ADR-003, RustFS as the local S3, and ADR-004,
+  one processing flow on AWS, with Polars for bronze, Athena as the
+  only SQL engine for dbt and DuckDB only for ad-hoc exploration.
+  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8))
+- `README.md`: a "Deploying to production" section on running the
+  same DAGs on Amazon MWAA, and the limitation of the local Airflow.
+  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8))
+
+### Changed
+
+- ADR-002 now says why Dagster was replaced, lists the alternatives
+  (Dagster, MWAA, Step Functions), records that Airflow runs locally
+  while the data lives on AWS, and uses Airflow 3's
+  `airflow backfill create`.
+  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8))
+- `AGENTS.md` and `CONTRIBUTING.md`: f-strings everywhere except in
+  logging calls, which take `%s` arguments (Ruff G004).
+  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8))
+- `README.md`: the roadmap names Polars for bronze and Athena for dbt,
+  as in ADR-004.
+  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8))
+
 ## [0.2.1] - 2026-11-14
 
 ### Added

@@ -27,7 +27,8 @@ asked.
 - Type-hint public functions and methods, including their return types. Don't
 use `return None`.
 - Use `pathlib` for path management. Don't use `os.path`.
-- Prefer f-strings over `str.format()` or `%` formatting.
+- Prefer f-strings over `str.format()` or `%` formatting, except in
+  logging calls, which take `%s` arguments (Ruff G004).
 - Follow EAFP: handle exceptions rather than checking conditions up front.
 - Write Google-style docstrings for every public function and method.
 - Embrace idiomatic Python like comprehensions, generators, and decorators.

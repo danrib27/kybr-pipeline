@@ -56,17 +56,40 @@ The tools still to come are in the [roadmap](#roadmap).
   ([#7](https://github.com/danrib27/kybr-pipeline/issues/7))
 - [ ] Provision the bucket and IAM with **Terraform**
   ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
-- [ ] Load the raw zips into **Apache Iceberg** bronze tables, queried
-  through **AWS Glue** and **Athena**, with **DuckDB / Polars**
+- [ ] Load the raw zips with **Polars** into **Apache Iceberg** bronze
+  tables, cataloged in **AWS Glue** and queried with **Athena**
   ([#11](https://github.com/danrib27/kybr-pipeline/issues/11))
 - [ ] Ingest the CNPJ registry from Receita Federal
   ([#12](https://github.com/danrib27/kybr-pipeline/issues/12))
 - [ ] Build the staging, intermediate and supplier risk mart with
-  **dbt** ([#13](https://github.com/danrib27/kybr-pipeline/issues/13))
+  **dbt** on Athena ([#13](https://github.com/danrib27/kybr-pipeline/issues/13))
 - [ ] Run the pipeline as **Airflow** DAGs
   ([#14](https://github.com/danrib27/kybr-pipeline/issues/14))
 - [ ] Data quality checks and LGPD notes
   ([#15](https://github.com/danrib27/kybr-pipeline/issues/15))
+
+## Deploying to production
+
+The pipeline is meant to run as Airflow DAGs
+([#14](https://github.com/danrib27/kybr-pipeline/issues/14)) in Docker
+on a local machine, while the data and the queries live on AWS (S3,
+Glue and Athena). The DAGs depend on nothing local, so in production
+the same files run on a managed Airflow such as
+[Amazon MWAA](https://aws.amazon.com/managed-workflows-for-apache-airflow/)
+or Astronomer:
+
+1. Upload the DAGs and a `requirements.txt` with `kybr-pipeline` to the
+   S3 bucket of the MWAA environment.
+2. Give the environment's execution role access to the data bucket,
+   Glue and Athena.
+3. Set the variables in `.env` as Airflow variables or in AWS Secrets
+   Manager.
+
+**Limitation:** with the local Airflow, schedules only run while it is
+up. A month missed while it was down is caught up with
+`airflow backfill create`. MWAA removes the limitation, at a fixed cost
+of about US$ 365/month, which is why it is not used here
+([ADR-002](docs/decisions.md#adr-002-orchestrate-with-airflow-instead-of-dagster)).
 
 The design decisions are recorded in the
 [architecture decision records](docs/decisions.md).

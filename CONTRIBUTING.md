@@ -48,8 +48,9 @@ never with `pip`.
    Conventional Commits one: `feature/` (for `feat`), `fix/`, `build/`,
    `chore/` or `docs/`. For example, `docs/5-fix-broken-links`.
 2. Write the code with type hints and Google-style docstrings, in lines
-   of at most 79 columns. Each module in `src/kybr_pipeline/` has its
-   own `tests/test_<module>.py`.
+   of at most 79 columns. Use f-strings, except in logging calls,
+   which take `%s` arguments (Ruff G004). Each module in
+   `src/kybr_pipeline/` has its own `tests/test_<module>.py`.
 3. Run `make lint` and `make test` before committing.
 4. Record the change in `CHANGELOG.md`, and update `README.md` when what
    the project does or how it is used changes.
