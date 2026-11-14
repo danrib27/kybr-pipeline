@@ -23,7 +23,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `CONTRIBUTING.md`: a "Good practices" section with the test data
   rule: at most one quarter of the monthly data sets (2023-T2) and one
   snapshot of the daily ones, ingesting one endpoint at a time.
-  ([#7](https://github.com/danrib27/kybr-pipeline/issues/7))
+  ([#7](https://github.com/danrib27/kybr-pipeline/issues/7),
+  [43d98e2](https://github.com/danrib27/kybr-pipeline/commit/43d98e23b91e20d5d8bf6649956be61060e54fc0))
 
 ### Changed
 
@@ -43,7 +44,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
   [8b87564](https://github.com/danrib27/kybr-pipeline/commit/8b875649e2deaa410437c86c7155f29870400ad9))
 - `README.md`: the roadmap marks the test sample in `raw/` as done,
   instead of the full backfill of the history.
-  ([#7](https://github.com/danrib27/kybr-pipeline/issues/7))
+  ([#7](https://github.com/danrib27/kybr-pipeline/issues/7),
+  [43d98e2](https://github.com/danrib27/kybr-pipeline/commit/43d98e23b91e20d5d8bf6649956be61060e54fc0))
 
 ## [0.2.1] - 2026-11-14
 
