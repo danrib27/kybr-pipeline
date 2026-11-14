@@ -29,7 +29,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `AGENTS.md`, `CONTRIBUTING.md` and `docs/decisions.md`: a published
   ADR is never changed or removed, except for small fixes that keep its
   original meaning; a new decision gets a new ADR.
-  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8))
+  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8),
+  [ddbd95b](https://github.com/danrib27/kybr-pipeline/commit/ddbd95b9838b48d78ea8fe06790e39962749a1d8))
 
 ### Changed
 
