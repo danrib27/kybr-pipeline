@@ -58,11 +58,13 @@ snapshots.
 ADR-001 relied on Dagster's per-partition materialization history to
 track processed batches and on Dagster partitions for backfills.
 
-Dagster was replaced because Apache Airflow is the orchestrator most
-data teams run, and it has managed offerings (Amazon MWAA, Astronomer)
-that run the same DAG files unchanged. A pipeline built on it shows
-the skill most data engineering roles ask for, and its DAGs can move to
-production without a rewrite.
+Dagster was replaced for two reasons:
+
+- Apache Airflow is widely used in the market: it is the orchestrator
+  most data teams run, so the pipeline shows the skill most data
+  engineering roles ask for.
+- The author uses Airflow every day, so the DAGs follow patterns
+  already proven in production, with no new tool to learn.
 
 ### Decision
 
