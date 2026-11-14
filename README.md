@@ -62,7 +62,8 @@ The tools still to come are in the [roadmap](#roadmap).
 - [ ] Ingest the CNPJ registry from Receita Federal
   ([#12](https://github.com/danrib27/kybr-pipeline/issues/12))
 - [ ] Build the staging, intermediate and supplier risk mart with
-  **dbt** on Athena ([#13](https://github.com/danrib27/kybr-pipeline/issues/13))
+  **dbt** on Athena
+  ([#13](https://github.com/danrib27/kybr-pipeline/issues/13))
 - [ ] Run the pipeline as **Airflow** DAGs
   ([#14](https://github.com/danrib27/kybr-pipeline/issues/14))
 - [ ] Data quality checks and LGPD notes
