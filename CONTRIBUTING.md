@@ -25,11 +25,19 @@
 
 | Command | What it does |
 | --- | --- |
-| `make run` | runs the `kybr-pipeline` CLI with the variables in `.env` |
+| `make` / `make help` | lists these commands |
+| `make run ARGS="..."` | runs the `kybr-pipeline` CLI with the variables in `.env` and the arguments in `ARGS` |
 | `make test` | runs the whole pytest suite |
 | `make lint` | checks the code with Ruff |
 | `make format` | applies Ruff's fixes and formats the code |
 | `make up` / `make down` | starts / stops the services in `docker-compose.yml` |
+
+The CLI needs a subcommand, so `make run` takes it in `ARGS`. For
+example, to ingest every month of 2021:
+
+```sh
+make run ARGS="ingest monthly -l compras -i 202101 -f 202112"
+```
 
 Dependencies are added with `uv add <package>` (or `uv add --dev`),
 never with `pip`.
@@ -37,13 +45,27 @@ never with `pip`.
 ## Workflow
 
 1. Branch from `main` as `<type>/<name>`, where the type is the
-   Conventional Commits one: `feature/` (for `feat`), `fix/`, `chore/`
-   or `docs/`. For example, `docs/5-fix-broken-links`.
+   Conventional Commits one: `feature/` (for `feat`), `fix/`, `build/`,
+   `chore/` or `docs/`. For example, `docs/5-fix-broken-links`.
 2. Write the code with type hints and Google-style docstrings, in lines
    of at most 79 columns. Each module in `src/kybr_pipeline/` has its
    own `tests/test_<module>.py`.
 3. Run `make lint` and `make test` before committing.
 4. Record the change in `CHANGELOG.md`, and update `README.md` when what
    the project does or how it is used changes.
-5. Commit with [Conventional Commits](https://www.conventionalcommits.org/)
-   and open a pull request. CI runs the lint and the tests on it.
+5. Bump the version, following
+   [Semantic Versioning](https://semver.org/): `major` for a breaking
+   change, `minor` for a new feature, `patch` for a fix or docs.
+
+   ```sh
+   uv version --bump minor
+   ```
+
+   It updates `pyproject.toml` and `uv.lock`. Then turn
+   `## [Unreleased]` in `CHANGELOG.md` into
+   `## [<version>] - <YYYY-MM-DD>`, leaving an empty `## [Unreleased]`
+   above it.
+6. Commit with [Conventional Commits](https://www.conventionalcommits.org/)
+   and open a pull request. CI runs the lint and the tests on it, and
+   fails if the version is not greater than the one on `main` or has no
+   section in `CHANGELOG.md`.

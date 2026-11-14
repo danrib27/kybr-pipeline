@@ -9,10 +9,15 @@
   for dependencies.
 - Run the app with `make run`.
 - Branch from `main` as `<type>/<name>`, with the Conventional Commits
-  type: `feature/` (for `feat`), `fix/`, `chore/` or `docs/`. Use
-  Conventional Commits.
+  type: `feature/` (for `feat`), `fix/`, `build/`, `chore/` or `docs/`.
+  Use Conventional Commits.
 - Stage changes for review. Don't commit to `main` or push without
   being asked.
+- Every pull request bumps the version, following Semantic Versioning,
+  with `uv version --bump <major|minor|patch>`, which updates
+  `pyproject.toml` and `uv.lock`. Turn `## [Unreleased]` in
+  `CHANGELOG.md` into `## [<version>] - <YYYY-MM-DD>`. CI fails a pull
+  request whose version is not greater than the one on `main`.
 - Don't create, install or remove new packages or new files without being
 asked.
 
