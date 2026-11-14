@@ -1,5 +1,10 @@
 # Architecture Decision Records
 
+A published ADR is never changed or removed, except for small fixes
+(typos, links, wording) that keep its original meaning. A new or
+reversed decision gets a new ADR, which amends or supersedes the old
+one; the old ADR only gets its status updated.
+
 ## ADR-001: Replace staging/archive tables with Iceberg and partition-aware orchestration
 
 - **Status:** Accepted; the orchestrator is amended by ADR-002

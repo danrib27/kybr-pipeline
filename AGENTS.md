@@ -52,3 +52,7 @@ commit and issue id.
 and used, changes.
 - Update `schemas.yml` (dbt) when a model, column or test is added,
 removed or altered.
+- Never change or remove a published ADR in `docs/decisions.md`, except
+  for small fixes (typos, links, wording) that keep its original
+  meaning. A new decision gets a new ADR, which amends or supersedes the
+  old one; the old ADR only gets its status updated.

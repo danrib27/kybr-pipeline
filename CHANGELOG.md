@@ -26,6 +26,11 @@ and the project uses [Semantic Versioning](https://semver.org/).
   ([#7](https://github.com/danrib27/kybr-pipeline/issues/7),
   [43d98e2](https://github.com/danrib27/kybr-pipeline/commit/43d98e23b91e20d5d8bf6649956be61060e54fc0))
 
+- `AGENTS.md`, `CONTRIBUTING.md` and `docs/decisions.md`: a published
+  ADR is never changed or removed, except for small fixes that keep its
+  original meaning; a new decision gets a new ADR.
+  ([#8](https://github.com/danrib27/kybr-pipeline/issues/8))
+
 ### Changed
 
 - ADR-002 now says why Dagster was replaced, lists the alternatives

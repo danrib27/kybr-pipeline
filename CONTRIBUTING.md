@@ -92,3 +92,11 @@ Tests and local runs ingest a small sample, never the whole history:
   (HTTP 405) for some minutes.
 - The portal publishes the monthly files months late, and a month not
   published yet answers HTTP 403.
+
+### Architecture decision records
+
+A published ADR in [`docs/decisions.md`](docs/decisions.md) is never
+changed or removed, except for small fixes (typos, links, wording) that
+keep its original meaning. A new or reversed decision gets a new ADR,
+which amends or supersedes the old one, and the old ADR only gets its
+status updated, as in "Accepted; amended by ADR-002".
