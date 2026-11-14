@@ -25,11 +25,19 @@
 
 | Command | What it does |
 | --- | --- |
-| `make run` | runs the `kybr-pipeline` CLI with the variables in `.env` |
+| `make` / `make help` | lists these commands |
+| `make run ARGS="..."` | runs the `kybr-pipeline` CLI with the variables in `.env` and the arguments in `ARGS` |
 | `make test` | runs the whole pytest suite |
 | `make lint` | checks the code with Ruff |
 | `make format` | applies Ruff's fixes and formats the code |
 | `make up` / `make down` | starts / stops the services in `docker-compose.yml` |
+
+The CLI needs a subcommand, so `make run` takes it in `ARGS`. For
+example, to ingest every month of 2021:
+
+```sh
+make run ARGS="ingest monthly -l compras -i 202101 -f 202112"
+```
 
 Dependencies are added with `uv add <package>` (or `uv add --dev`),
 never with `pip`.
@@ -37,8 +45,8 @@ never with `pip`.
 ## Workflow
 
 1. Branch from `main` as `<type>/<name>`, where the type is the
-   Conventional Commits one: `feature/` (for `feat`), `fix/`, `chore/`
-   or `docs/`. For example, `docs/5-fix-broken-links`.
+   Conventional Commits one: `feature/` (for `feat`), `fix/`, `build/`,
+   `chore/` or `docs/`. For example, `docs/5-fix-broken-links`.
 2. Write the code with type hints and Google-style docstrings, in lines
    of at most 79 columns. Each module in `src/kybr_pipeline/` has its
    own `tests/test_<module>.py`.

@@ -34,6 +34,9 @@ and the project uses [Semantic Versioning](https://semver.org/).
   to, with what is done and the planned work linked to its issues.
   ([#5](https://github.com/danrib27/kybr-pipeline/issues/5),
   [8930804](https://github.com/danrib27/kybr-pipeline/commit/893080475445c9d79ac1f18dc90e50a45003bc5f))
+- `make help`, the default goal, lists the `make` targets with a
+  one-line description each.
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
 
 ### Changed
 
@@ -55,6 +58,13 @@ and the project uses [Semantic Versioning](https://semver.org/).
   `.gitignore`.
   ([#5](https://github.com/danrib27/kybr-pipeline/issues/5),
   [8930804](https://github.com/danrib27/kybr-pipeline/commit/893080475445c9d79ac1f18dc90e50a45003bc5f))
+- `make run` passes the `ARGS` variable to the CLI, as in
+  `make run ARGS="ingest monthly -l compras -i 202101 -f 202112"`, since
+  the CLI needs a subcommand. Both are documented in `CONTRIBUTING.md`.
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
+- `build/` joins the branch types in `AGENTS.md` and
+  `CONTRIBUTING.md`, for build system changes such as the `Makefile`.
+  ([#6](https://github.com/danrib27/kybr-pipeline/issues/6))
 
 ## [0.2.0] - 2026-11-09
 

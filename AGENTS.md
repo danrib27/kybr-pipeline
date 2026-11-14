@@ -9,8 +9,8 @@
   for dependencies.
 - Run the app with `make run`.
 - Branch from `main` as `<type>/<name>`, with the Conventional Commits
-  type: `feature/` (for `feat`), `fix/`, `chore/` or `docs/`. Use
-  Conventional Commits.
+  type: `feature/` (for `feat`), `fix/`, `build/`, `chore/` or `docs/`.
+  Use Conventional Commits.
 - Stage changes for review. Don't commit to `main` or push without
   being asked.
 - Don't create, install or remove new packages or new files without being
