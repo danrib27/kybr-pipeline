@@ -53,5 +53,19 @@ never with `pip`.
 3. Run `make lint` and `make test` before committing.
 4. Record the change in `CHANGELOG.md`, and update `README.md` when what
    the project does or how it is used changes.
-5. Commit with [Conventional Commits](https://www.conventionalcommits.org/)
-   and open a pull request. CI runs the lint and the tests on it.
+5. Bump the version, following
+   [Semantic Versioning](https://semver.org/): `major` for a breaking
+   change, `minor` for a new feature, `patch` for a fix or docs.
+
+   ```sh
+   uv version --bump minor
+   ```
+
+   It updates `pyproject.toml` and `uv.lock`. Then turn
+   `## [Unreleased]` in `CHANGELOG.md` into
+   `## [<version>] - <YYYY-MM-DD>`, leaving an empty `## [Unreleased]`
+   above it.
+6. Commit with [Conventional Commits](https://www.conventionalcommits.org/)
+   and open a pull request. CI runs the lint and the tests on it, and
+   fails if the version is not greater than the one on `main` or has no
+   section in `CHANGELOG.md`.

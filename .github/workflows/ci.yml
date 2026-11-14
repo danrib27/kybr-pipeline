@@ -38,3 +38,62 @@ jobs:
       # The tests use fakes and a local HTTP server: no network or AWS.
       - name: Test
         run: uv run pytest -vv
+
+  version:
+    name: Version bump
+    # Every pull request must bump the version (see CONTRIBUTING.md).
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Fetch the base branch
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: git fetch --depth=1 origin "$BASE_REF"
+
+      # Fails, with an annotation on the PR, if the version is not
+      # greater than the base branch's or has no CHANGELOG.md section.
+      - name: Check the version was bumped
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        shell: python
+        run: |
+          import os
+          import subprocess
+          import sys
+          import tomllib
+          from pathlib import Path
+
+          base_ref = os.environ["BASE_REF"]
+          base_toml = subprocess.run(
+              ["git", "show", f"origin/{base_ref}:pyproject.toml"],
+              check=True,
+              capture_output=True,
+              text=True,
+          ).stdout
+          base = tomllib.loads(base_toml)["project"]["version"]
+          head = tomllib.loads(Path("pyproject.toml").read_text())[
+              "project"
+          ]["version"]
+
+          def key(version):
+              return tuple(int(part) for part in version.split("."))
+
+          errors = []
+          if key(head) <= key(base):
+              errors.append(
+                  f"version {head} is not greater than {base} on"
+                  f" {base_ref}: run `uv version --bump"
+                  " <major|minor|patch>`"
+              )
+          if f"## [{head}]" not in Path("CHANGELOG.md").read_text():
+              errors.append(f"CHANGELOG.md has no '## [{head}]' section")
+
+          for error in errors:
+              print(f"::error file=pyproject.toml::{error}")
+          if not errors:
+              print(f"version bumped: {base} -> {head}")
+          sys.exit(1 if errors else 0)
