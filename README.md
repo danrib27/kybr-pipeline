@@ -49,11 +49,12 @@ The tools still to come are in the [roadmap](#roadmap).
 - [x] Progress logs for each download and upload
   ([#4](https://github.com/danrib27/kybr-pipeline/issues/4))
 - [x] CI with lint and tests on every pull request
+- [x] A test sample of every data set in the `raw/` zone: one quarter
+  of the monthly ones and one snapshot of the daily ones
+  ([#7](https://github.com/danrib27/kybr-pipeline/issues/7))
 
 ### Next
 
-- [ ] Backfill the raw history of every data set
-  ([#7](https://github.com/danrib27/kybr-pipeline/issues/7))
 - [ ] Provision the bucket and IAM with **Terraform**
   ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
 - [ ] Load the raw zips with **Polars** into **Apache Iceberg** bronze
