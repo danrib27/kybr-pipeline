@@ -22,12 +22,15 @@ and the project uses [Semantic Versioning](https://semver.org/).
   `athena-results/`; and a least-privilege IAM policy, attached to the
   `kybr-pipeline` user, limited to that bucket, workgroup and
   databases. The region is the `region` variable.
-  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
 - `infra/bootstrap/`: the versioned, encrypted S3 bucket that holds
   the Terraform state, with S3 native locking (`use_lockfile`).
-  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
 - `CONTRIBUTING.md`: how to provision and destroy the AWS side.
-  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
 
 ## [0.2.2] - 2026-11-14
 
