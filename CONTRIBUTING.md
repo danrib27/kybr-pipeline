@@ -26,6 +26,10 @@
 The AWS side lives in `infra/` as Terraform (1.10 or newer), in two
 stacks. It needs credentials of an admin, not the pipeline's.
 
+Bucket names are unique across AWS. If a bucket with the name of the
+state or the data bucket already exists outside Terraform, delete it,
+or bring it in with an `import` block, before the first `apply`.
+
 1. Once per account, create the bucket that holds the Terraform state.
    Its own state stays local, in `infra/bootstrap/`:
 
@@ -64,7 +68,8 @@ terraform -chdir=infra destroy -var force_destroy=true
 ```
 
 Before a pull request, run `terraform fmt -recursive infra` and
-`terraform validate` in each stack.
+`terraform validate` in each stack. CI runs both on every pull
+request, without AWS credentials.
 
 ## Everyday commands
 

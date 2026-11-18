@@ -19,6 +19,16 @@ variable "force_destroy" {
   default     = false
 }
 
+variable "bytes_scanned_cutoff_per_query" {
+  description = <<-EOT
+    Bytes an Athena query may scan before it is cancelled (1 GiB). It
+    protects the credits from a query without a filter that scans
+    every table.
+  EOT
+  type        = number
+  default     = 1073741824
+}
+
 variable "pipeline_user_name" {
   description = "IAM user the pipeline runs as."
   type        = string

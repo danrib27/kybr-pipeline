@@ -1,12 +1,12 @@
-# dbt's dev target writes to the dev_ databases, so it never
-# overwrites the prod tables (ADR-004).
+# dev_ is dbt's dev target (ADR-004). Its prefixes sit beside the prod
+# ones, so cleaning a prod prefix never touches dev data.
 locals {
   glue_databases = {
     bronze     = "bronze/"
     silver     = "silver/"
     gold       = "gold/"
-    dev_silver = "silver/dev/"
-    dev_gold   = "gold/dev/"
+    dev_silver = "dev_silver/"
+    dev_gold   = "dev_gold/"
   }
 }
 

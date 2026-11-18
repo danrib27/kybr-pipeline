@@ -1,6 +1,7 @@
 locals {
   layers         = toset(["raw", "bronze", "silver", "gold"])
-  athena_results = "s3://${var.data_bucket_name}/athena-results/"
+  athena_prefix  = "athena-results/"
+  athena_results = "s3://${var.data_bucket_name}/${local.athena_prefix}"
 }
 
 resource "aws_s3_bucket" "data" {
@@ -77,6 +78,25 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
 
     abort_incomplete_multipart_upload {
       days_after_initiation = 7
+    }
+  }
+
+  # Query results are never overwritten, so they need their own rule.
+  rule {
+    id     = "expire-athena-results"
+    status = "Enabled"
+
+    filter {
+      prefix = local.athena_prefix
+    }
+
+    expiration {
+      days = 7
+    }
+
+    # Expiring only adds a delete marker; this removes the data itself.
+    noncurrent_version_expiration {
+      noncurrent_days = 1
     }
   }
 
