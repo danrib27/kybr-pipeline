@@ -15,7 +15,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
   made by hand in the console, with the region in the `region`
   variable.
   ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
-  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3),
+  [fd9f516](https://github.com/danrib27/kybr-pipeline/commit/fd9f516a38244a18fe58053ef6ae44d672cfd8d4))
   - **S3:** the `aws-s3-kybr` data bucket, with versioning, SSE-S3
     encryption, public access block and the `raw/`, `bronze/`,
     `silver/` and `gold/` prefixes. Its lifecycle rules expire
@@ -37,13 +38,15 @@ and the project uses [Semantic Versioning](https://semver.org/).
   [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
 - CI: a `terraform` job that checks the format and validates both
   stacks, without AWS credentials.
-  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [fd9f516](https://github.com/danrib27/kybr-pipeline/commit/fd9f516a38244a18fe58053ef6ae44d672cfd8d4))
 - `CONTRIBUTING.md`: an "AWS infrastructure" section on applying and
   destroying both stacks, creating the pipeline's access key, and
   deleting or importing a bucket with the same name made outside
   Terraform.
   ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
-  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3),
+  [fd9f516](https://github.com/danrib27/kybr-pipeline/commit/fd9f516a38244a18fe58053ef6ae44d672cfd8d4))
 - `README.md`: Terraform in the tech stack, and the roadmap item done.
   ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
   [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
