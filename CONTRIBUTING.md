@@ -21,6 +21,51 @@
    keys as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in `.env`.
    The web console is at <http://localhost:9001>.
 
+## AWS infrastructure
+
+The AWS side lives in `infra/` as Terraform (1.10 or newer), in two
+stacks. It needs credentials of an admin, not the pipeline's.
+
+1. Once per account, create the bucket that holds the Terraform state.
+   Its own state stays local, in `infra/bootstrap/`:
+
+   ```sh
+   terraform -chdir=infra/bootstrap init
+   terraform -chdir=infra/bootstrap apply
+   ```
+
+2. Create the data bucket, the Glue databases, the Athena workgroup
+   and the pipeline's IAM user and policy:
+
+   ```sh
+   terraform -chdir=infra init
+   terraform -chdir=infra apply
+   ```
+
+3. Create an access key for the `kybr-pipeline` user and put it in
+   `.env`. It is made outside Terraform so the secret never lands in
+   the state:
+
+   ```sh
+   aws iam create-access-key --user-name kybr-pipeline
+   ```
+
+The region is the `region` variable (`us-east-1` by default). The
+backend in `infra/terraform.tf` cannot read variables, so a new region
+also goes there and in `infra/bootstrap`.
+
+`terraform destroy` refuses to delete a data bucket that has objects.
+To rebuild everything, apply `force_destroy` first, which also deletes
+the data:
+
+```sh
+terraform -chdir=infra apply -var force_destroy=true
+terraform -chdir=infra destroy -var force_destroy=true
+```
+
+Before a pull request, run `terraform fmt -recursive infra` and
+`terraform validate` in each stack.
+
 ## Everyday commands
 
 | Command | What it does |

@@ -7,6 +7,28 @@ and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-18
+
+### Added
+
+- `infra/`: Terraform for the whole AWS side, replacing the resources
+  made by hand in the console. The data bucket (versioning, SSE-S3
+  encryption, public access block, the `raw/`, `bronze/`, `silver/`
+  and `gold/` prefixes, and a lifecycle rule that expires noncurrent
+  versions after 7 days, removes expired delete markers and aborts
+  incomplete multipart uploads after 7 days); the Glue databases
+  `bronze`, `silver`, `gold`, `dev_silver` and `dev_gold`; the
+  `kybr-pipeline` Athena workgroup, with its results in
+  `athena-results/`; and a least-privilege IAM policy, attached to the
+  `kybr-pipeline` user, limited to that bucket, workgroup and
+  databases. The region is the `region` variable.
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+- `infra/bootstrap/`: the versioned, encrypted S3 bucket that holds
+  the Terraform state, with S3 native locking (`use_lockfile`).
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+- `CONTRIBUTING.md`: how to provision and destroy the AWS side.
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+
 ## [0.2.2] - 2026-11-14
 
 ### Added
