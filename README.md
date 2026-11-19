@@ -28,6 +28,8 @@ Today the code uses:
 - **Python 3.12** with `requests` and `boto3`, managed with `uv`
 - **AWS S3** for the raw zone, with **RustFS** as the local S3 in
   development
+- **Terraform** for the AWS side: S3, Glue Data Catalog, Athena and
+  IAM
 - **Docker Compose** for the local services
 - **GitHub Actions** running Ruff and pytest on every pull request
 
@@ -52,11 +54,12 @@ The tools still to come are in the [roadmap](#roadmap).
 - [x] A test sample of every data set in the `raw/` zone: one quarter
   of the monthly ones and one snapshot of the daily ones
   ([#7](https://github.com/danrib27/kybr-pipeline/issues/7))
+- [x] The AWS side (S3, Glue, Athena and IAM) provisioned with
+  **Terraform**
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
 
 ### Next
 
-- [ ] Provision the bucket and IAM with **Terraform**
-  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
 - [ ] Load the raw zips with **Polars** into **Apache Iceberg** bronze
   tables, cataloged in **AWS Glue** and queried with **Athena**
   ([#11](https://github.com/danrib27/kybr-pipeline/issues/11))

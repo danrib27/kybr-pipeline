@@ -7,6 +7,50 @@ and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-18
+
+### Added
+
+- `infra/`: Terraform for the whole AWS side, replacing the resources
+  made by hand in the console, with the region in the `region`
+  variable.
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3),
+  [fd9f516](https://github.com/danrib27/kybr-pipeline/commit/fd9f516a38244a18fe58053ef6ae44d672cfd8d4))
+  - **S3:** the `aws-s3-kybr` data bucket, with versioning, SSE-S3
+    encryption, public access block and the `raw/`, `bronze/`,
+    `silver/` and `gold/` prefixes. Its lifecycle rules expire
+    noncurrent versions after 7 days, remove expired delete markers,
+    abort incomplete multipart uploads after 7 days and delete the
+    Athena query results in `athena-results/` after 7 days.
+  - **Glue:** the `bronze`, `silver` and `gold` databases, and
+    `dev_silver` and `dev_gold` for dbt's dev target, in their own
+    prefixes beside the prod ones.
+  - **Athena:** the `kybr-pipeline` workgroup, pinned to engine
+    version 3, with its results in `athena-results/` and queries
+    cancelled past `bytes_scanned_cutoff_per_query` bytes (1 GiB by
+    default).
+  - **IAM:** a least-privilege policy, limited to that bucket,
+    workgroup and databases, attached to the `kybr-pipeline` user.
+- `infra/bootstrap/`: the versioned, encrypted S3 bucket that holds
+  the Terraform state, with S3 native locking (`use_lockfile`).
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
+- CI: a `terraform` job that checks the format and validates both
+  stacks, without AWS credentials.
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [fd9f516](https://github.com/danrib27/kybr-pipeline/commit/fd9f516a38244a18fe58053ef6ae44d672cfd8d4))
+- `CONTRIBUTING.md`: an "AWS infrastructure" section on applying and
+  destroying both stacks, creating the pipeline's access key, and
+  deleting or importing a bucket with the same name made outside
+  Terraform.
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3),
+  [fd9f516](https://github.com/danrib27/kybr-pipeline/commit/fd9f516a38244a18fe58053ef6ae44d672cfd8d4))
+- `README.md`: Terraform in the tech stack, and the roadmap item done.
+  ([#9](https://github.com/danrib27/kybr-pipeline/issues/9),
+  [ec79655](https://github.com/danrib27/kybr-pipeline/commit/ec7965532e8cb1d8d9e51032688e08a6ceb4c0c3))
+
 ## [0.2.2] - 2026-11-14
 
 ### Added
