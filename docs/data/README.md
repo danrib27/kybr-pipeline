@@ -43,6 +43,21 @@ Every CSV of the four data sets has the same format:
 Characters outside latin-1 are replaced by `¿` at the source, as in
 `CONTRATO N¿ 7`.
 
+## Names
+
+Each column keeps its source name, as in the CSV header, and gets a
+bronze name in snake_case, as the notebooks' `to_snake_case` builds
+it:
+
+1. `(R$)` becomes the `_brl` suffix.
+2. Accents are stripped and letters lowercased.
+3. Any run of characters other than letters and digits, as a space or
+   ` - `, becomes one `_`.
+
+So `Valor Empenho (R$)` is `valor_empenho_brl`, and
+`RAZÃO SOCIAL - CADASTRO RECEITA` is `razao_social_cadastro_receita`.
+The bronze names are unique within each file.
+
 ## Types
 
 The bronze type is the Iceberg type a column gets when read with the
@@ -51,8 +66,12 @@ format above:
 - `string`: codes and identifiers too, since they carry leading zeros
   (`000022026`, `03000`, CPF and CNPJ) that a number would drop.
 - `bigint`: counts, such as a quantity.
-- `decimal(18,4)`: money, in BRL. The sources write 2 or 4 decimal
-  places.
+- `decimal(18,2)` or `decimal(18,4)`: money, in BRL, with the scale
+  the source writes, so no value is rounded. A column written with 4
+  decimal places (`428400,9600`) is `decimal(18,4)`, even where a
+  zero comes as `0,00`; one written with 2 (`3,36`) is
+  `decimal(18,2)`. A file that came empty in the sample gets
+  `decimal(18,4)`, which loses nothing whatever its real scale.
 - `date`: parsed from `dd/mm/yyyy`.
 
 An empty string becomes null in every type.

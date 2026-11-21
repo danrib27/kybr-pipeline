@@ -53,25 +53,25 @@ One row per bidding homologated in the month.
 `Número Licitação` alone repeats across UGs, and `Código UG` +
 `Número Licitação` repeats across modalities.
 
-| Column | Type | Meaning | Notes |
-| --- | --- | --- | --- |
-| `Número Licitação` | string | number of the bidding in SIASG | 9 digits: number in the year (5) + year (4), as `000052023` |
-| `Código UG` | string | UG in charge of the bidding | 6 digits, leading zeros (`030100`) |
-| `Nome UG` | string | its name | cut at 45 chars |
-| `Código Modalidade Compra` | string | modality code | see [modalities](#modalities) |
-| `Modalidade Compra` | string | modality | one name per code |
-| `Número Processo` | string | process number of the bidding | free format: `08420010098202379`, `0375/2023`, `NÃO IDENTIFICADO` |
-| `Objeto` | string | what is to be bought, sold or contracted | starts with `Objeto:`; up to 516 chars |
-| `Situação Licitação` | string | status of the bidding process | cut at 30 chars, as `Evento de Resultado de Julgame`; 21 values |
-| `Código Órgão Superior` | string | Órgão Superior in charge of the bidding | 5 digits |
-| `Nome Órgão Superior` | string | its name | `Sem informação` in a few rows |
-| `Código Órgão` | string | Órgão in charge of the bidding | 5 digits |
-| `Nome Órgão` | string | its name | cut at 45 chars, some with trailing spaces |
-| `UF` | string | state where the bidding takes place | 27 states, or `-3` |
-| `Município` | string | city where the bidding takes place | mostly upper case without accents |
-| `Data Resultado Compra` | date | publication of the homologation in the DOU | defines the month of the file |
-| `Data Abertura` | date | opening for proposals | empty in 27%; never after the result |
-| `Valor Licitação` | decimal(18,4) | total value of the bidding | `0,00` in 44%, mostly price registrations |
+| Column | Bronze name | Type | Meaning | Notes |
+| --- | --- | --- | --- | --- |
+| `Número Licitação` | `numero_licitacao` | string | number of the bidding in SIASG | 9 digits: number in the year (5) + year (4), as `000052023` |
+| `Código UG` | `codigo_ug` | string | UG in charge of the bidding | 6 digits, leading zeros (`030100`) |
+| `Nome UG` | `nome_ug` | string | its name | cut at 45 chars |
+| `Código Modalidade Compra` | `codigo_modalidade_compra` | string | modality code | see [modalities](#modalities) |
+| `Modalidade Compra` | `modalidade_compra` | string | modality | one name per code |
+| `Número Processo` | `numero_processo` | string | process number of the bidding | free format: `08420010098202379`, `0375/2023`, `NÃO IDENTIFICADO` |
+| `Objeto` | `objeto` | string | what is to be bought, sold or contracted | starts with `Objeto:`; up to 516 chars |
+| `Situação Licitação` | `situacao_licitacao` | string | status of the bidding process | cut at 30 chars, as `Evento de Resultado de Julgame`; 21 values |
+| `Código Órgão Superior` | `codigo_orgao_superior` | string | Órgão Superior in charge of the bidding | 5 digits |
+| `Nome Órgão Superior` | `nome_orgao_superior` | string | its name | `Sem informação` in a few rows |
+| `Código Órgão` | `codigo_orgao` | string | Órgão in charge of the bidding | 5 digits |
+| `Nome Órgão` | `nome_orgao` | string | its name | cut at 45 chars, some with trailing spaces |
+| `UF` | `uf` | string | state where the bidding takes place | 27 states, or `-3` |
+| `Município` | `municipio` | string | city where the bidding takes place | mostly upper case without accents |
+| `Data Resultado Compra` | `data_resultado_compra` | date | publication of the homologation in the DOU | defines the month of the file |
+| `Data Abertura` | `data_abertura` | date | opening for proposals | empty in 27%; never after the result |
+| `Valor Licitação` | `valor_licitacao` | decimal(18,4) | total value of the bidding | 4 decimal places; `0,00` in 44%, mostly price registrations |
 
 ## ItemLicitação
 
@@ -83,22 +83,22 @@ unique for the rows with an item code. 480 rows have no item code and
 no key. An item split among suppliers has a row per winner (28 items).
 There are also 22 full-row duplicates.
 
-| Column | Type | Meaning | Notes |
-| --- | --- | --- | --- |
-| `Número Licitação` | string | number of the bidding in SIASG | |
-| `Código UG` | string | UG in charge of the bidding | |
-| `Nome UG` | string | its name | |
-| `Código Modalidade Compra` | string | modality code | |
-| `Modalidade Compra` | string | modality | |
-| `Número Processo` | string | process number of the bidding | |
-| `Código Órgão` | string | Órgão in charge of the bidding | |
-| `Nome Órgão` | string | its name | cut at 45 chars |
-| `Código Item Compra` | string | code of the item in SIASG | 22 digits, see below; empty in 480 rows |
-| `Descrição` | string | description of the item in SIASG | up to 120 chars |
-| `Quantidade Item` | bigint | quantity | integer |
-| `Valor Item` | decimal(18,4) | **total** value of the item | the items add up to `Valor Licitação` in 85% of biddings |
-| `Código Vencedor` | string | winner's CNPJ, says the dictionary | also CPF (11 digits) in 809 rows |
-| `Nome Vencedor` | string | winner's name | sole traders as `53.068.544 NAME` |
+| Column | Bronze name | Type | Meaning | Notes |
+| --- | --- | --- | --- | --- |
+| `Número Licitação` | `numero_licitacao` | string | number of the bidding in SIASG | |
+| `Código UG` | `codigo_ug` | string | UG in charge of the bidding | |
+| `Nome UG` | `nome_ug` | string | its name | |
+| `Código Modalidade Compra` | `codigo_modalidade_compra` | string | modality code | |
+| `Modalidade Compra` | `modalidade_compra` | string | modality | |
+| `Número Processo` | `numero_processo` | string | process number of the bidding | |
+| `Código Órgão` | `codigo_orgao` | string | Órgão in charge of the bidding | |
+| `Nome Órgão` | `nome_orgao` | string | its name | cut at 45 chars |
+| `Código Item Compra` | `codigo_item_compra` | string | code of the item in SIASG | 22 digits, see below; empty in 480 rows |
+| `Descrição` | `descricao` | string | description of the item in SIASG | up to 120 chars |
+| `Quantidade Item` | `quantidade_item` | bigint | quantity | integer |
+| `Valor Item` | `valor_item` | decimal(18,4) | **total** value of the item | 4 decimal places; the items add up to `Valor Licitação` in 85% of biddings |
+| `Código Vencedor` | `codigo_vencedor` | string | winner's CNPJ, says the dictionary | also CPF (11 digits) in 809 rows |
+| `Nome Vencedor` | `nome_vencedor` | string | winner's name | sole traders as `53.068.544 NAME` |
 
 `Código Item Compra` has 22 digits: `Código UG` (6) + modality (2) +
 number of the bidding in the year (5) + year of the bidding (4) + item
@@ -115,21 +115,21 @@ One row per bidder of an item.
 `Código Participante`, unique except for the hidden bidders (`-11`).
 There are also 1,419 full-row duplicates.
 
-| Column | Type | Meaning | Notes |
-| --- | --- | --- | --- |
-| `Número Licitação` | string | number of the bidding in SIASG | |
-| `Código UG` | string | UG in charge of the bidding | |
-| `Nome UG` | string | its name | |
-| `Código Modalidade Compra` | string | modality code | |
-| `Modalidade Compra` | string | modality | |
-| `Número Processo` | string | process number of the bidding | |
-| `Código Órgão` | string | Órgão in charge of the bidding | |
-| `Nome Órgão` | string | its name | cut at 45 chars |
-| `Código Item Compra` | string | code of the item in SIASG | `0` when hidden |
-| `Descrição Item Compra` | string | description of the item in SIASG | hidden text when secret |
-| `Código Participante` | string | bidder's CNPJ, says the dictionary | also CPF (11 digits); `-11` when hidden |
-| `Nome Participante` | string | bidder's name | `Sigiloso` when hidden |
-| `Flag Vencedor` | string | whether the bidder won the item | `SIM` or `NÃO` |
+| Column | Bronze name | Type | Meaning | Notes |
+| --- | --- | --- | --- | --- |
+| `Número Licitação` | `numero_licitacao` | string | number of the bidding in SIASG | |
+| `Código UG` | `codigo_ug` | string | UG in charge of the bidding | |
+| `Nome UG` | `nome_ug` | string | its name | |
+| `Código Modalidade Compra` | `codigo_modalidade_compra` | string | modality code | |
+| `Modalidade Compra` | `modalidade_compra` | string | modality | |
+| `Número Processo` | `numero_processo` | string | process number of the bidding | |
+| `Código Órgão` | `codigo_orgao` | string | Órgão in charge of the bidding | |
+| `Nome Órgão` | `nome_orgao` | string | its name | cut at 45 chars |
+| `Código Item Compra` | `codigo_item_compra` | string | code of the item in SIASG | `0` when hidden |
+| `Descrição Item Compra` | `descricao_item_compra` | string | description of the item in SIASG | hidden text when secret |
+| `Código Participante` | `codigo_participante` | string | bidder's CNPJ, says the dictionary | also CPF (11 digits); `-11` when hidden |
+| `Nome Participante` | `nome_participante` | string | bidder's name | `Sigiloso` when hidden |
+| `Flag Vencedor` | `flag_vencedor` | string | whether the bidder won the item | `SIM` or `NÃO` |
 
 ## EmpenhosRelacionados
 
@@ -137,18 +137,18 @@ Commitments of expense (empenhos) of a bidding. **Empty in every
 month of the sample**: the types come from the dictionary and are not
 checked against data.
 
-| Column | Type | Meaning |
-| --- | --- | --- |
-| `Número Licitação` | string | number of the bidding in SIASG |
-| `Código UG` | string | UG in charge of the bidding |
-| `Nome UG` | string | its name |
-| `Código Modalidade Compra` | string | modality code |
-| `Modalidade Compra` | string | modality |
-| `Número Processo` | string | process number of the bidding |
-| `Código Empenho` | string | code of the commitment |
-| `Data Emissão Empenho` | date | date the commitment was issued |
-| `Observação Empenho` | string | notes on the commitment |
-| `Valor Empenho (R$)` | decimal(18,4) | value of the commitment |
+| Column | Bronze name | Type | Meaning |
+| --- | --- | --- | --- |
+| `Número Licitação` | `numero_licitacao` | string | number of the bidding in SIASG |
+| `Código UG` | `codigo_ug` | string | UG in charge of the bidding |
+| `Nome UG` | `nome_ug` | string | its name |
+| `Código Modalidade Compra` | `codigo_modalidade_compra` | string | modality code |
+| `Modalidade Compra` | `modalidade_compra` | string | modality |
+| `Número Processo` | `numero_processo` | string | process number of the bidding |
+| `Código Empenho` | `codigo_empenho` | string | code of the commitment |
+| `Data Emissão Empenho` | `data_emissao_empenho` | date | date the commitment was issued |
+| `Observação Empenho` | `observacao_empenho` | string | notes on the commitment |
+| `Valor Empenho (R$)` | `valor_empenho_brl` | decimal(18,4) | value of the commitment; scale unchecked, as the file is empty |
 
 ## Modalities
 

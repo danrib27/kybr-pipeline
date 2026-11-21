@@ -61,32 +61,32 @@ contract, but 63 contracts appear more than once with a different
 again within a month, sometimes only to fix a typo in `Objeto`. See
 [known issues](#known-issues).
 
-| Column | Type | Meaning | Notes |
-| --- | --- | --- | --- |
-| `Número do Contrato` | string | number of the contract in ComprasNet | 9 digits: sequence (5) + year (4), as `000022026`; unique only within a UG |
-| `Objeto` | string | object of the contract | always starts with `Objeto:`; up to 520 chars |
-| `Fundamento Legal` | string | legal basis of the contract | starts with `Fundamento Legal:`; empty in 99.9% |
-| `Modalidade Compra` | string | procurement modality | `Sem Informação` in 99%; see [modalities](#modalities) |
-| `Situação Contrato` | string | status of the contract | always `Não se aplica` |
-| `Código Órgão Superior` | string | Órgão Superior in charge of the bidding | 5 digits |
-| `Nome Órgão Superior` | string | its name | |
-| `Código Órgão` | string | Órgão in charge of the bidding | 5 digits |
-| `Nome Órgão` | string | its name | cut at 45 chars, some with trailing spaces |
-| `Código UG` | string | UG of the contract | 6 digits, leading zeros (`080001`) |
-| `Nome UG` | string | its name | cut at 45 chars |
-| `Data Assinatura Contrato` | date | signature of the contract | back to 2016 |
-| `Data Publicação DOU` | date | publication of the contract in the DOU | defines the month of the file |
-| `Data Início Vigência` | date | start of validity | |
-| `Data Fim Vigência` | date | end of validity | empty in 2%; never before the start |
-| `Código Contratado` | string | supplier's CNPJ, says the dictionary | also CPF (11 digits), 9-digit codes and `-11` when hidden |
-| `Nome Contratado` | string | supplier's name | `Sigiloso` when hidden |
-| `Valor Inicial Compra` | decimal(18,4) | initial value | 4 decimal places; `0,00` in 1% |
-| `Valor Final Compra` | decimal(18,4) | final value, after adjustments, additions and the like | differs from the initial in 1% |
-| `Número Licitação` | string | number of the bidding in SIASG, as in [licitacoes](licitacoes.md) | `-3` when there is none (60%) |
-| `Código UG Licitação` | string | UG in charge of the bidding | filled in about 1% |
-| `Nome UG Licitação` | string | its name | filled in about 1% |
-| `Código Modalidade Compra Licitação` | string | modality code of the bidding | filled in about 1%; `5`, `6`, `7` or `9999` |
-| `Modalidade Compra Licitação` | string | modality of the bidding | filled in about 1% |
+| Column | Bronze name | Type | Meaning | Notes |
+| --- | --- | --- | --- | --- |
+| `Número do Contrato` | `numero_do_contrato` | string | number of the contract in ComprasNet | 9 digits: sequence (5) + year (4), as `000022026`; unique only within a UG |
+| `Objeto` | `objeto` | string | object of the contract | always starts with `Objeto:`; up to 520 chars |
+| `Fundamento Legal` | `fundamento_legal` | string | legal basis of the contract | starts with `Fundamento Legal:`; empty in 99.9% |
+| `Modalidade Compra` | `modalidade_compra` | string | procurement modality | `Sem Informação` in 99%; see [modalities](#modalities) |
+| `Situação Contrato` | `situacao_contrato` | string | status of the contract | always `Não se aplica` |
+| `Código Órgão Superior` | `codigo_orgao_superior` | string | Órgão Superior in charge of the bidding | 5 digits |
+| `Nome Órgão Superior` | `nome_orgao_superior` | string | its name | |
+| `Código Órgão` | `codigo_orgao` | string | Órgão in charge of the bidding | 5 digits |
+| `Nome Órgão` | `nome_orgao` | string | its name | cut at 45 chars, some with trailing spaces |
+| `Código UG` | `codigo_ug` | string | UG of the contract | 6 digits, leading zeros (`080001`) |
+| `Nome UG` | `nome_ug` | string | its name | cut at 45 chars |
+| `Data Assinatura Contrato` | `data_assinatura_contrato` | date | signature of the contract | back to 2016 |
+| `Data Publicação DOU` | `data_publicacao_dou` | date | publication of the contract in the DOU | defines the month of the file |
+| `Data Início Vigência` | `data_inicio_vigencia` | date | start of validity | |
+| `Data Fim Vigência` | `data_fim_vigencia` | date | end of validity | empty in 2%; never before the start |
+| `Código Contratado` | `codigo_contratado` | string | supplier's CNPJ, says the dictionary | also CPF (11 digits), 9-digit codes and `-11` when hidden |
+| `Nome Contratado` | `nome_contratado` | string | supplier's name | `Sigiloso` when hidden |
+| `Valor Inicial Compra` | `valor_inicial_compra` | decimal(18,4) | initial value | 4 decimal places; `0,00` in 1% |
+| `Valor Final Compra` | `valor_final_compra` | decimal(18,4) | final value, after adjustments, additions and the like | differs from the initial in 1% |
+| `Número Licitação` | `numero_licitacao` | string | number of the bidding in SIASG, as in [licitacoes](licitacoes.md) | `-3` when there is none (60%) |
+| `Código UG Licitação` | `codigo_ug_licitacao` | string | UG in charge of the bidding | filled in about 1% |
+| `Nome UG Licitação` | `nome_ug_licitacao` | string | its name | filled in about 1% |
+| `Código Modalidade Compra Licitação` | `codigo_modalidade_compra_licitacao` | string | modality code of the bidding | filled in about 1%; `5`, `6`, `7` or `9999` |
+| `Modalidade Compra Licitação` | `modalidade_compra_licitacao` | string | modality of the bidding | filled in about 1% |
 
 ## ItemCompra
 
@@ -97,18 +97,18 @@ One row per item of a contract.
 collisions in the sample. There are also full-row duplicates (303 in
 the sample).
 
-| Column | Type | Meaning | Notes |
-| --- | --- | --- | --- |
-| `Código Órgão` | string | Órgão in charge of the bidding | |
-| `Nome Órgão` | string | its name | cut at 45 chars |
-| `Código UG` | string | UG of the contract | |
-| `Nome UG` | string | its name | |
-| `Número Contrato` | string | number of the contract in ComprasNet | joins `Compras.Número do Contrato` |
-| `Código Item Compra` | string | code of the item in SIASG | 22 digits, see below; `0` when hidden |
-| `Descrição Item Compra` | string | description of the item | hidden text when secret |
-| `Descrição Complementar Item Compra` | string | free description | not in the dictionary; up to 1,300 chars |
-| `Quantidade Item` | bigint | quantity | integer; `0` in a few rows |
-| `Valor Item` | decimal(18,4) | **unit** value of the item | quantity × value adds up to `Valor Inicial Compra` in 96% of contracts |
+| Column | Bronze name | Type | Meaning | Notes |
+| --- | --- | --- | --- | --- |
+| `Código Órgão` | `codigo_orgao` | string | Órgão in charge of the bidding | |
+| `Nome Órgão` | `nome_orgao` | string | its name | cut at 45 chars |
+| `Código UG` | `codigo_ug` | string | UG of the contract | |
+| `Nome UG` | `nome_ug` | string | its name | |
+| `Número Contrato` | `numero_contrato` | string | number of the contract in ComprasNet | joins `Compras.Número do Contrato` |
+| `Código Item Compra` | `codigo_item_compra` | string | code of the item in SIASG | 22 digits, see below; `0` when hidden |
+| `Descrição Item Compra` | `descricao_item_compra` | string | description of the item | hidden text when secret |
+| `Descrição Complementar Item Compra` | `descricao_complementar_item_compra` | string | free description | not in the dictionary; up to 1,300 chars |
+| `Quantidade Item` | `quantidade_item` | bigint | quantity | integer; `0` in a few rows |
+| `Valor Item` | `valor_item` | decimal(18,2) | **unit** value of the item | 2 decimal places; quantity × value adds up to `Valor Inicial Compra` in 96% of contracts |
 
 `Código Item Compra` has 22 digits: `Código UG` (6) + modality (2,
 see below) + number of the bidding in the year (5) + year of the
@@ -151,18 +151,18 @@ One row per amendment to a contract.
 **Identifies a row:** `Código UG` + `Número Contrato` +
 `Número Termo Aditivo`, unique in the sample.
 
-| Column | Type | Meaning | Notes |
-| --- | --- | --- | --- |
-| `Número Contrato` | string | number of the contract in ComprasNet | |
-| `Código Órgão Superior` | string | Órgão Superior in charge of the bidding | |
-| `Nome Órgão Superior` | string | its name | |
-| `Código Órgão` | string | Órgão in charge of the bidding | |
-| `Nome Órgão` | string | its name | |
-| `Código UG` | string | UG of the contract | |
-| `Nome UG` | string | its name | |
-| `Número Termo Aditivo` | string | number of the amendment in ComprasNet | 9 digits: sequence (5) + year (4) |
-| `Data Publicação` | date | publication of the amendment in the DOU | empty in 12% |
-| `Objeto` | string | object of the amendment | starts with `Objetivo:` |
+| Column | Bronze name | Type | Meaning | Notes |
+| --- | --- | --- | --- | --- |
+| `Número Contrato` | `numero_contrato` | string | number of the contract in ComprasNet | |
+| `Código Órgão Superior` | `codigo_orgao_superior` | string | Órgão Superior in charge of the bidding | |
+| `Nome Órgão Superior` | `nome_orgao_superior` | string | its name | |
+| `Código Órgão` | `codigo_orgao` | string | Órgão in charge of the bidding | |
+| `Nome Órgão` | `nome_orgao` | string | its name | |
+| `Código UG` | `codigo_ug` | string | UG of the contract | |
+| `Nome UG` | `nome_ug` | string | its name | |
+| `Número Termo Aditivo` | `numero_termo_aditivo` | string | number of the amendment in ComprasNet | 9 digits: sequence (5) + year (4) |
+| `Data Publicação` | `data_publicacao` | date | publication of the amendment in the DOU | empty in 12% |
+| `Objeto` | `objeto` | string | object of the amendment | starts with `Objetivo:` |
 
 ## Apostilamento
 
@@ -171,20 +171,20 @@ already provides for, as a price adjustment, and so needs no
 amendment. **Empty in every month of the sample**: the types come
 from the dictionary and are not checked against data.
 
-| Column | Type | Meaning |
-| --- | --- | --- |
-| `Número Contrato` | string | number of the contract in ComprasNet |
-| `Código Órgão Superior` | string | Órgão Superior in charge of the bidding |
-| `Nome Órgão Superior` | string | its name |
-| `Código Órgão` | string | Órgão in charge of the bidding |
-| `Nome Órgão` | string | its name |
-| `Código UG` | string | UG of the contract |
-| `Nome UG` | string | its name |
-| `Número Apostilamento` | string | number of the apostilamento in ComprasNet |
-| `Descrição Apostilamento` | string | description of the change |
-| `Valor Apostilamento` | decimal(18,4) | value |
-| `Data de inclusão` | date | date it was entered in ComprasNet |
-| `Situação Apostilamento` | string | status: pendente, em encerramento, efetivado or encerrado |
+| Column | Bronze name | Type | Meaning |
+| --- | --- | --- | --- |
+| `Número Contrato` | `numero_contrato` | string | number of the contract in ComprasNet |
+| `Código Órgão Superior` | `codigo_orgao_superior` | string | Órgão Superior in charge of the bidding |
+| `Nome Órgão Superior` | `nome_orgao_superior` | string | its name |
+| `Código Órgão` | `codigo_orgao` | string | Órgão in charge of the bidding |
+| `Nome Órgão` | `nome_orgao` | string | its name |
+| `Código UG` | `codigo_ug` | string | UG of the contract |
+| `Nome UG` | `nome_ug` | string | its name |
+| `Número Apostilamento` | `numero_apostilamento` | string | number of the apostilamento in ComprasNet |
+| `Descrição Apostilamento` | `descricao_apostilamento` | string | description of the change |
+| `Valor Apostilamento` | `valor_apostilamento` | decimal(18,4) | value; scale unchecked, as the file is empty |
+| `Data de inclusão` | `data_de_inclusao` | date | date it was entered in ComprasNet |
+| `Situação Apostilamento` | `situacao_apostilamento` | string | status: pendente, em encerramento, efetivado or encerrado |
 
 ## Known issues
 
