@@ -12,6 +12,11 @@ specifications.
   technical decisions made, their rationale, the alternatives considered
   and their impact on the project.
 
+### 🗂️ Data
+
+* [Data dictionary](data/README.md) — The source schema of each data
+  set: files, format, columns, row keys and known data quality issues.
+
 ### 👥 Contributing
 
 * [Contributing Guide](../CONTRIBUTING.md) — Setup, branches, commits

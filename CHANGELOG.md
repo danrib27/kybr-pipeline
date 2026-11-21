@@ -7,6 +7,29 @@ and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-21
+
+### Added
+
+- `docs/data/`: a data dictionary with a page for each data set
+  (`compras`, `licitacoes`, `ceis` and `cnep`), the source schema of
+  the bronze tables: the files in each zip, their format, the columns
+  with type and meaning, the columns that identify a row and the known
+  data quality issues.
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+- An `explore` dependency group with Jupyter and Polars, and
+  `make explore` to install it and set up a git filter that strips
+  notebook outputs on `git add`.
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+- CI: fails when a versioned notebook has outputs.
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+
+### Fixed
+
+- `.gitignore`: the `data/` rule also ignored `docs/data/`; it now
+  ignores only the `data/` folder at the root.
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+
 ## [0.3.0] - 2026-11-18
 
 ### Added

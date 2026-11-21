@@ -81,6 +81,7 @@ request, without AWS credentials.
 | `make lint` | checks the code with Ruff |
 | `make format` | applies Ruff's fixes and formats the code |
 | `make up` / `make down` | starts / stops the services in `docker-compose.yml` |
+| `make explore` | installs Jupyter and Polars and strips notebook outputs on `git add` |
 
 The CLI needs a subcommand, so `make run` takes it in `ARGS`. For
 example, to ingest every month of 2021:
@@ -142,6 +143,24 @@ Tests and local runs ingest a small sample, never the whole history:
   (HTTP 405) for some minutes.
 - The portal publishes the monthly files months late, and a month not
   published yet answers HTTP 403.
+
+### Notebooks
+
+Data exploration lives in Jupyter notebooks in `notebooks/`, with the
+`explore` dependency group (Jupyter and Polars). Run once per clone:
+
+```sh
+make explore
+```
+
+It installs the group and sets up the `nbstrip` git filter, which
+`.gitattributes` applies to every `.ipynb`: `git add` stores the
+notebook without its outputs, while the file on disk keeps them. The
+outputs hold samples of the data, which stays out of git. CI fails a
+pull request with a notebook that has outputs.
+
+What a notebook finds about a data set goes into its page of the
+[data dictionary](docs/data/README.md).
 
 ### Architecture decision records
 

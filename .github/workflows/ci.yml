@@ -35,6 +35,37 @@ jobs:
       - name: Lint
         run: uv run ruff check --output-format=github
 
+      # Notebooks are versioned without outputs (see CONTRIBUTING.md).
+      - name: Check the notebooks have no outputs
+        shell: python
+        run: |
+          import json
+          import subprocess
+          import sys
+
+          paths = subprocess.run(
+              ["git", "ls-files", "*.ipynb"],
+              check=True,
+              capture_output=True,
+              text=True,
+          ).stdout.split()
+
+          dirty = [
+              path
+              for path in paths
+              if any(
+                  cell.get("outputs") or cell.get("execution_count")
+                  for cell in json.load(open(path))["cells"]
+              )
+          ]
+
+          for path in dirty:
+              print(
+                  f"::error file={path}::notebook has outputs: run"
+                  " `make explore` and add it again"
+              )
+          sys.exit(1 if dirty else 0)
+
       # The tests use fakes and a local HTTP server: no network or AWS.
       - name: Test
         run: uv run pytest -vv

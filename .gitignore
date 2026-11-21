@@ -45,7 +45,7 @@ credentials*.json
 service-account*.json
 
 # --- Dados do pipeline (não versionar dados brutos/processados) ---
-data/
+/data/
 *.csv
 !dbt/seeds/**/*.csv
 *.parquet
