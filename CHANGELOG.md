@@ -26,6 +26,9 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - CI: fails when a versioned notebook has outputs.
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
   [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a))
+- `notebooks/`: a notebook per data set that reads its CSVs with an
+  explicit Polars schema, versioned without outputs.
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
 
 ### Fixed
 
