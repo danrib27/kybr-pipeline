@@ -15,9 +15,12 @@ and the project uses [Semantic Versioning](https://semver.org/).
   (`compras`, `licitacoes`, `ceis` and `cnep`), the source schema of
   the bronze tables: the files in each zip, their format, the columns
   with type and meaning, the columns that identify a row and the known
-  data quality issues.
+  data quality issues. Each column has a bronze name in snake_case,
+  and money is `decimal(18,2)` or `decimal(18,4)`, the scale its
+  source writes.
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
-  [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a))
+  [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a),
+  [72672cc](https://github.com/danrib27/kybr-pipeline/commit/72672ccaac0d1b4777acaa83fc437bb0c01667f0))
 - An `explore` dependency group with Jupyter and Polars, and
   `make explore` to install it and set up a git filter that strips
   notebook outputs on `git add`.
@@ -27,9 +30,12 @@ and the project uses [Semantic Versioning](https://semver.org/).
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
   [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a))
 - `notebooks/`: a notebook per data set that reads its CSVs with an
-  explicit Polars schema, versioned without outputs.
+  explicit Polars schema, money as `Decimal(18, 2)` or
+  `Decimal(18, 4)` by the source's scale, and renames the columns to
+  snake_case. Versioned without outputs.
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
-  [de67183](https://github.com/danrib27/kybr-pipeline/commit/de67183efb7c35cf2f2b7ff7572a559ae1548046))
+  [de67183](https://github.com/danrib27/kybr-pipeline/commit/de67183efb7c35cf2f2b7ff7572a559ae1548046),
+  [72672cc](https://github.com/danrib27/kybr-pipeline/commit/72672ccaac0d1b4777acaa83fc437bb0c01667f0))
 
 ### Fixed
 
