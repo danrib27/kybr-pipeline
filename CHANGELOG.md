@@ -16,19 +16,23 @@ and the project uses [Semantic Versioning](https://semver.org/).
   the bronze tables: the files in each zip, their format, the columns
   with type and meaning, the columns that identify a row and the known
   data quality issues.
-  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
+  [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a))
 - An `explore` dependency group with Jupyter and Polars, and
   `make explore` to install it and set up a git filter that strips
   notebook outputs on `git add`.
-  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
+  [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a))
 - CI: fails when a versioned notebook has outputs.
-  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
+  [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a))
 
 ### Fixed
 
 - `.gitignore`: the `data/` rule also ignored `docs/data/`; it now
   ignores only the `data/` folder at the root.
-  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
+  [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a))
 
 ## [0.3.0] - 2026-11-18
 
