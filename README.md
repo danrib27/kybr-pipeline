@@ -57,6 +57,8 @@ The tools still to come are in the [roadmap](#roadmap).
 - [x] The AWS side (S3, Glue, Athena and IAM) provisioned with
   **Terraform**
   ([#9](https://github.com/danrib27/kybr-pipeline/issues/9))
+- [x] A [data dictionary](docs/data/README.md) for each data set
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
 
 ### Next
 

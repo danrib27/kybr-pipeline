@@ -81,12 +81,13 @@ request, without AWS credentials.
 | `make lint` | checks the code with Ruff |
 | `make format` | applies Ruff's fixes and formats the code |
 | `make up` / `make down` | starts / stops the services in `docker-compose.yml` |
+| `make explore` | installs Jupyter and Polars and strips notebook outputs on `git add` |
 
 The CLI needs a subcommand, so `make run` takes it in `ARGS`. For
-example, to ingest every month of 2021:
+example, to ingest `compras` from 2024-02 to 2024-04:
 
 ```sh
-make run ARGS="ingest monthly -l compras -i 202101 -f 202112"
+make run ARGS="ingest monthly -l compras -i 202402 -f 202404"
 ```
 
 Dependencies are added with `uv add <package>` (or `uv add --dev`),
@@ -127,13 +128,14 @@ never with `pip`.
 
 Tests and local runs ingest a small sample, never the whole history:
 
-- **Monthly data sets** (`compras`, `licitacoes`): at most one quarter.
-  The sample is 2023-T2, the same months for both, so they can be
-  joined:
+- **Monthly data sets** (`compras`, `licitacoes`): at most three
+  months. The sample is 2024-02 to 2024-04, the same months for both,
+  so they can be joined, and the months profiled in the
+  [data dictionary](docs/data/README.md):
 
   ```sh
-  make run ARGS="ingest monthly -l compras -i 202304 -f 202306"
-  make run ARGS="ingest monthly -l licitacoes -i 202304 -f 202306"
+  make run ARGS="ingest monthly -l compras -i 202402 -f 202404"
+  make run ARGS="ingest monthly -l licitacoes -i 202402 -f 202404"
   ```
 
 - **Daily data sets** (`ceis`, `cnep`): only one snapshot.
@@ -142,6 +144,24 @@ Tests and local runs ingest a small sample, never the whole history:
   (HTTP 405) for some minutes.
 - The portal publishes the monthly files months late, and a month not
   published yet answers HTTP 403.
+
+### Notebooks
+
+Data exploration lives in Jupyter notebooks in `notebooks/`, with the
+`explore` dependency group (Jupyter and Polars). Run once per clone:
+
+```sh
+make explore
+```
+
+It installs the group and sets up the `nbstrip` git filter, which
+`.gitattributes` applies to every `.ipynb`: `git add` stores the
+notebook without its outputs, while the file on disk keeps them. The
+outputs hold samples of the data, which stays out of git. CI fails a
+pull request with a notebook that has outputs.
+
+What a notebook finds about a data set goes into its page of the
+[data dictionary](docs/data/README.md).
 
 ### Architecture decision records
 
