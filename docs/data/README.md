@@ -15,7 +15,7 @@ identify a row and the known data quality issues.
 ## How the pages were written
 
 The facts come from profiling the raw zips, all values read as text:
-`compras` 2026-05 to 2026-07, `licitacoes` 2024-02 to 2024-04, and the
+`compras` and `licitacoes` 2024-02 to 2024-04, and the
 `ceis` and `cnep` snapshots of 2026-11-19. Counts on the pages are from
 that sample.
 
@@ -87,7 +87,9 @@ or a flag, before any count or join:
 | `-11` (code), `Sigiloso` (name) | supplier hidden by secrecy |
 | `Informação protegida por sigilo nos termos da legislação vigente` | description hidden by secrecy |
 | `-3` | not informed |
+| `-2` | as `-3`, in the `Número Licitação` of `compras` |
+| `-3` (UG), `-1` (Órgão Superior), `Inválido` | invalid unit, in the `Apostilamento` of `compras` |
 | `Sem Informação`, `Sem informação`, `SEM INFORMACAO` | not informed |
-| `Não se aplica` | not applicable |
+| `Não se aplica`, `Nao se aplica` | not applicable |
 
 [portal]: https://portaldatransparencia.gov.br/download-de-dados
