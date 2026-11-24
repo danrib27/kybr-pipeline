@@ -20,7 +20,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
   source writes.
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
   [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a),
-  [72672cc](https://github.com/danrib27/kybr-pipeline/commit/72672ccaac0d1b4777acaa83fc437bb0c01667f0))
+  [72672cc](https://github.com/danrib27/kybr-pipeline/commit/72672ccaac0d1b4777acaa83fc437bb0c01667f0),
+  [683df26](https://github.com/danrib27/kybr-pipeline/commit/683df26384935b55894b2a02a8a3e759a7dc1ef5))
 - An `explore` dependency group with Jupyter and Polars, and
   `make explore` to install it and set up a git filter that strips
   notebook outputs on `git add`.
