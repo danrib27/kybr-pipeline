@@ -53,9 +53,26 @@ Compras (Código UG, Número do Contrato)
 
 Every `ItemCompra` and `TermoAditivo` row has its contract in
 `Compras` of the same month. 203 of the 1,508 contracts in
-`Apostilamento` are in no `Compras` file of the sample. `Compras`
-points to its bidding in [licitacoes](licitacoes.md) through
-`Número Licitação` and `Código UG Licitação`.
+`Apostilamento` are in no `Compras` file of the sample.
+
+`Compras` points to its bidding in [licitacoes](licitacoes.md) through
+the three columns that
+[identify a bidding](licitacoes.md#licitação):
+
+| `Compras` | `Licitação` |
+| --- | --- |
+| `Código UG Licitação` | `Código UG` |
+| `Número Licitação` | `Número Licitação` |
+| `Código Modalidade Compra Licitação` | `Código Modalidade Compra` |
+
+The UG is `Código UG Licitação`, not `Código UG`: a contract can come
+from another UG's bidding, as when a body joins another body's price
+registration. That is the case of 20% of the contracts with a bidding,
+mostly price registrations. A contract without a bidding,
+`Número Licitação` `-3` or `-2` (27%), has nothing to join, nor have
+48 others with a number but no UG or modality: 28% in all. How many of
+the others find their bidding is not measured yet. See
+[known issues](#known-issues).
 
 The children join on `Código UG` + `Número Contrato` only, which does
 not always tell one contract from another. See
@@ -246,8 +263,8 @@ rows on average, up to 305, that differ only in
 - **Mostly empty columns:** `Fundamento Legal`, `Situação Contrato`
   (`Não se aplica`) and `Situação Apostilamento`. `Modalidade Compra`
   is `Sem Informação` and the bidding columns are empty in 28% of
-  contracts, those without a bidding (`Número Licitação` `-3` or
-  `-2`).
+  contracts: those without a bidding (`Número Licitação` `-3` or
+  `-2`) and 48 with a bidding number only.
 - **Modality codes off the dictionary:** `9999` instead of `-99`, no
   leading zeros, an extra Concorrência - Registro de Preço and `99`
   inside item codes. See [modalities](#modalities).
@@ -262,6 +279,12 @@ rows on average, up to 305, that differ only in
   `Valor Apostilamento` is negative in 4%.
 - **Truncated names:** `Nome Órgão` and `Nome UG` are cut at 45
   characters, some with trailing spaces.
+- **Join to licitacoes not measured:** a bidding is homologated months
+  before its contract is published, and the licitacoes file is cut by
+  homologation date. The bidding of a contract in the sample can then
+  be in a licitacoes file before 2024-02, which the sample lacks.
+  Measuring the join's coverage needs the biddings of the months
+  before the sample.
 - **`Valor Item` differs from licitacoes:** here a unit value, there
   an item total.
 - **Replaced characters:** 17 `¿` in `Fundamento Legal`, as

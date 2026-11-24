@@ -84,10 +84,10 @@ request, without AWS credentials.
 | `make explore` | installs Jupyter and Polars and strips notebook outputs on `git add` |
 
 The CLI needs a subcommand, so `make run` takes it in `ARGS`. For
-example, to ingest every month of 2021:
+example, to ingest `compras` from 2024-02 to 2024-04:
 
 ```sh
-make run ARGS="ingest monthly -l compras -i 202101 -f 202112"
+make run ARGS="ingest monthly -l compras -i 202402 -f 202404"
 ```
 
 Dependencies are added with `uv add <package>` (or `uv add --dev`),
@@ -128,13 +128,14 @@ never with `pip`.
 
 Tests and local runs ingest a small sample, never the whole history:
 
-- **Monthly data sets** (`compras`, `licitacoes`): at most one quarter.
-  The sample is 2023-T2, the same months for both, so they can be
-  joined:
+- **Monthly data sets** (`compras`, `licitacoes`): at most three
+  months. The sample is 2024-02 to 2024-04, the same months for both,
+  so they can be joined, and the months profiled in the
+  [data dictionary](docs/data/README.md):
 
   ```sh
-  make run ARGS="ingest monthly -l compras -i 202304 -f 202306"
-  make run ARGS="ingest monthly -l licitacoes -i 202304 -f 202306"
+  make run ARGS="ingest monthly -l compras -i 202402 -f 202404"
+  make run ARGS="ingest monthly -l licitacoes -i 202402 -f 202404"
   ```
 
 - **Daily data sets** (`ceis`, `cnep`): only one snapshot.

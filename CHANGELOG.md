@@ -17,7 +17,9 @@ and the project uses [Semantic Versioning](https://semver.org/).
   with type and meaning, the columns that identify a row and the known
   data quality issues. Each column has a bronze name in snake_case,
   and money is `decimal(18,2)` or `decimal(18,4)`, the scale its
-  source writes.
+  source writes. A contract joins its bidding on three columns:
+  `Código UG Licitação`, `Número Licitação` and
+  `Código Modalidade Compra Licitação`.
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
   [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a),
   [72672cc](https://github.com/danrib27/kybr-pipeline/commit/72672ccaac0d1b4777acaa83fc437bb0c01667f0),
@@ -37,6 +39,13 @@ and the project uses [Semantic Versioning](https://semver.org/).
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
   [de67183](https://github.com/danrib27/kybr-pipeline/commit/de67183efb7c35cf2f2b7ff7572a559ae1548046),
   [72672cc](https://github.com/danrib27/kybr-pipeline/commit/72672ccaac0d1b4777acaa83fc437bb0c01667f0))
+
+### Changed
+
+- `CONTRIBUTING.md` and `Makefile`: the examples and the test sample
+  of the monthly data sets are 2024-02 to 2024-04, the months profiled
+  in the data dictionary, instead of 2023-T2 and 2021.
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
 
 ### Fixed
 

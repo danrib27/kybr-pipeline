@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := help
 
 # Arguments of the kybr-pipeline CLI, as in
-# make run ARGS="ingest monthly -l compras -i 202101 -f 202112"
+# make run ARGS="ingest monthly -l compras -i 202402 -f 202404"
 ARGS ?=
 
 # Clears the outputs of a notebook read from stdin (git clean filter).
