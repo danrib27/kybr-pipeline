@@ -23,7 +23,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
   ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
   [419fe96](https://github.com/danrib27/kybr-pipeline/commit/419fe96dde551e223553e73fd91dbde66fa88d0a),
   [72672cc](https://github.com/danrib27/kybr-pipeline/commit/72672ccaac0d1b4777acaa83fc437bb0c01667f0),
-  [683df26](https://github.com/danrib27/kybr-pipeline/commit/683df26384935b55894b2a02a8a3e759a7dc1ef5))
+  [683df26](https://github.com/danrib27/kybr-pipeline/commit/683df26384935b55894b2a02a8a3e759a7dc1ef5),
+  [716e861](https://github.com/danrib27/kybr-pipeline/commit/716e861b868d28e4b4fb7efb5392cf2e491189a2))
 - An `explore` dependency group with Jupyter and Polars, and
   `make explore` to install it and set up a git filter that strips
   notebook outputs on `git add`.
@@ -45,7 +46,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
 - `CONTRIBUTING.md` and `Makefile`: the examples and the test sample
   of the monthly data sets are 2024-02 to 2024-04, the months profiled
   in the data dictionary, instead of 2023-T2 and 2021.
-  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10))
+  ([#10](https://github.com/danrib27/kybr-pipeline/issues/10),
+  [716e861](https://github.com/danrib27/kybr-pipeline/commit/716e861b868d28e4b4fb7efb5392cf2e491189a2))
 
 ### Fixed
 
