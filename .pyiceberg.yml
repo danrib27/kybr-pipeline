@@ -1,0 +1,4 @@
+catalog:
+  default:
+    type: glue
+    glue.region: us-east-1
