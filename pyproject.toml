@@ -10,6 +10,7 @@ requires-python = ">=3.12"
 dependencies = [
     "boto3>=1.43.123",
     "humanfriendly>=10.0",
+    "pyiceberg[glue,pyarrow]>=0.12.0",
     "pyyaml>=6.0.3",
     "requests>=2.34.2",
 ]
