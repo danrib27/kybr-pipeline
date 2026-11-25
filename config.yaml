@@ -8,3 +8,506 @@ requests:
 
 s3:
   bucket_name: aws-s3-kybr
+
+schemas:
+  compras:
+    - name: compras
+      columns:
+        - name: 'Número do Contrato'
+          bronze_name: numero_do_contrato
+          type: string
+        - name: 'Objeto'
+          bronze_name: objeto
+          type: string
+        - name: 'Fundamento Legal'
+          bronze_name: fundamento_legal
+          type: string
+        - name: 'Modalidade Compra'
+          bronze_name: modalidade_compra
+          type: string
+        - name: 'Situação Contrato'
+          bronze_name: situacao_contrato
+          type: string
+        - name: 'Código Órgão Superior'
+          bronze_name: codigo_orgao_superior
+          type: string
+        - name: 'Nome Órgão Superior'
+          bronze_name: nome_orgao_superior
+          type: string
+        - name: 'Código Órgão'
+          bronze_name: codigo_orgao
+          type: string
+        - name: 'Nome Órgão'
+          bronze_name: nome_orgao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Data Assinatura Contrato'
+          bronze_name: data_assinatura_contrato
+          type: date
+        - name: 'Data Publicação DOU'
+          bronze_name: data_publicacao_dou
+          type: date
+        - name: 'Data Início Vigência'
+          bronze_name: data_inicio_vigencia
+          type: date
+        - name: 'Data Fim Vigência'
+          bronze_name: data_fim_vigencia
+          type: date
+        - name: 'Código Contratado'
+          bronze_name: codigo_contratado
+          type: string
+        - name: 'Nome Contratado'
+          bronze_name: nome_contratado
+          type: string
+        - name: 'Valor Inicial Compra'
+          bronze_name: valor_inicial_compra
+          type: decimal(18,4)
+        - name: 'Valor Final Compra'
+          bronze_name: valor_final_compra
+          type: decimal(18,4)
+        - name: 'Número Licitação'
+          bronze_name: numero_licitacao
+          type: string
+        - name: 'Código UG Licitação'
+          bronze_name: codigo_ug_licitacao
+          type: string
+        - name: 'Nome UG Licitação'
+          bronze_name: nome_ug_licitacao
+          type: string
+        - name: 'Código Modalidade Compra Licitação'
+          bronze_name: codigo_modalidade_compra_licitacao
+          type: string
+        - name: 'Modalidade Compra Licitação'
+          bronze_name: modalidade_compra_licitacao
+          type: string
+    - name: item_compra
+      columns:
+        - name: 'Código Órgão'
+          bronze_name: codigo_orgao
+          type: string
+        - name: 'Nome Órgão'
+          bronze_name: nome_orgao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Número Contrato'
+          bronze_name: numero_contrato
+          type: string
+        - name: 'Código Item Compra'
+          bronze_name: codigo_item_compra
+          type: string
+        - name: 'Descrição Item Compra'
+          bronze_name: descricao_item_compra
+          type: string
+        - name: 'Descrição Complementar Item Compra'
+          bronze_name: descricao_complementar_item_compra
+          type: string
+        - name: 'Quantidade Item'
+          bronze_name: quantidade_item
+          type: bigint
+        - name: 'Valor Item'
+          bronze_name: valor_item
+          type: decimal(18,2)
+    - name: termo_aditivo
+      columns:
+        - name: 'Número Contrato'
+          bronze_name: numero_contrato
+          type: string
+        - name: 'Código Órgão Superior'
+          bronze_name: codigo_orgao_superior
+          type: string
+        - name: 'Nome Órgão Superior'
+          bronze_name: nome_orgao_superior
+          type: string
+        - name: 'Código Órgão'
+          bronze_name: codigo_orgao
+          type: string
+        - name: 'Nome Órgão'
+          bronze_name: nome_orgao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Número Termo Aditivo'
+          bronze_name: numero_termo_aditivo
+          type: string
+        - name: 'Data Publicação'
+          bronze_name: data_publicacao
+          type: date
+        - name: 'Objeto'
+          bronze_name: objeto
+          type: string
+    - name: apostilamento
+      columns:
+        - name: 'Número Contrato'
+          bronze_name: numero_contrato
+          type: string
+        - name: 'Código Órgão Superior'
+          bronze_name: codigo_orgao_superior
+          type: string
+        - name: 'Nome Órgão Superior'
+          bronze_name: nome_orgao_superior
+          type: string
+        - name: 'Código Órgão'
+          bronze_name: codigo_orgao
+          type: string
+        - name: 'Nome Órgão'
+          bronze_name: nome_orgao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Número Apostilamento'
+          bronze_name: numero_apostilamento
+          type: string
+        - name: 'Descrição Apostilamento'
+          bronze_name: descricao_apostilamento
+          type: string
+        - name: 'Valor Apostilamento'
+          bronze_name: valor_apostilamento
+          type: decimal(18,2)
+        - name: 'Data de inclusão'
+          bronze_name: data_de_inclusao
+          type: date
+        - name: 'Situação Apostilamento'
+          bronze_name: situacao_apostilamento
+          type: string
+  licitacoes:
+    - name: licitacao
+      columns:
+        - name: 'Número Licitação'
+          bronze_name: numero_licitacao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Código Modalidade Compra'
+          bronze_name: codigo_modalidade_compra
+          type: string
+        - name: 'Modalidade Compra'
+          bronze_name: modalidade_compra
+          type: string
+        - name: 'Número Processo'
+          bronze_name: numero_processo
+          type: string
+        - name: 'Objeto'
+          bronze_name: objeto
+          type: string
+        - name: 'Situação Licitação'
+          bronze_name: situacao_licitacao
+          type: string
+        - name: 'Código Órgão Superior'
+          bronze_name: codigo_orgao_superior
+          type: string
+        - name: 'Nome Órgão Superior'
+          bronze_name: nome_orgao_superior
+          type: string
+        - name: 'Código Órgão'
+          bronze_name: codigo_orgao
+          type: string
+        - name: 'Nome Órgão'
+          bronze_name: nome_orgao
+          type: string
+        - name: 'UF'
+          bronze_name: uf
+          type: string
+        - name: 'Município'
+          bronze_name: municipio
+          type: string
+        - name: 'Data Resultado Compra'
+          bronze_name: data_resultado_compra
+          type: date
+        - name: 'Data Abertura'
+          bronze_name: data_abertura
+          type: date
+        - name: 'Valor Licitação'
+          bronze_name: valor_licitacao
+          type: decimal(18,4)
+    - name: item_licitacao
+      columns:
+        - name: 'Número Licitação'
+          bronze_name: numero_licitacao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Código Modalidade Compra'
+          bronze_name: codigo_modalidade_compra
+          type: string
+        - name: 'Modalidade Compra'
+          bronze_name: modalidade_compra
+          type: string
+        - name: 'Número Processo'
+          bronze_name: numero_processo
+          type: string
+        - name: 'Código Órgão'
+          bronze_name: codigo_orgao
+          type: string
+        - name: 'Nome Órgão'
+          bronze_name: nome_orgao
+          type: string
+        - name: 'Código Item Compra'
+          bronze_name: codigo_item_compra
+          type: string
+        - name: 'Descrição'
+          bronze_name: descricao
+          type: string
+        - name: 'Quantidade Item'
+          bronze_name: quantidade_item
+          type: bigint
+        - name: 'Valor Item'
+          bronze_name: valor_item
+          type: decimal(18,4)
+        - name: 'Código Vencedor'
+          bronze_name: codigo_vencedor
+          type: string
+        - name: 'Nome Vencedor'
+          bronze_name: nome_vencedor
+          type: string
+    - name: participantes_licitacao
+      columns:
+        - name: 'Número Licitação'
+          bronze_name: numero_licitacao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Código Modalidade Compra'
+          bronze_name: codigo_modalidade_compra
+          type: string
+        - name: 'Modalidade Compra'
+          bronze_name: modalidade_compra
+          type: string
+        - name: 'Número Processo'
+          bronze_name: numero_processo
+          type: string
+        - name: 'Código Órgão'
+          bronze_name: codigo_orgao
+          type: string
+        - name: 'Nome Órgão'
+          bronze_name: nome_orgao
+          type: string
+        - name: 'Código Item Compra'
+          bronze_name: codigo_item_compra
+          type: string
+        - name: 'Descrição Item Compra'
+          bronze_name: descricao_item_compra
+          type: string
+        - name: 'Código Participante'
+          bronze_name: codigo_participante
+          type: string
+        - name: 'Nome Participante'
+          bronze_name: nome_participante
+          type: string
+        - name: 'Flag Vencedor'
+          bronze_name: flag_vencedor
+          type: string
+    - name: empenhos_relacionados
+      columns:
+        - name: 'Número Licitação'
+          bronze_name: numero_licitacao
+          type: string
+        - name: 'Código UG'
+          bronze_name: codigo_ug
+          type: string
+        - name: 'Nome UG'
+          bronze_name: nome_ug
+          type: string
+        - name: 'Código Modalidade Compra'
+          bronze_name: codigo_modalidade_compra
+          type: string
+        - name: 'Modalidade Compra'
+          bronze_name: modalidade_compra
+          type: string
+        - name: 'Número Processo'
+          bronze_name: numero_processo
+          type: string
+        - name: 'Código Empenho'
+          bronze_name: codigo_empenho
+          type: string
+        - name: 'Data Emissão Empenho'
+          bronze_name: data_emissao_empenho
+          type: date
+        - name: 'Observação Empenho'
+          bronze_name: observacao_empenho
+          type: string
+        - name: 'Valor Empenho (R$)'
+          bronze_name: valor_empenho_brl
+          type: decimal(18,4)
+  ceis:
+    - name: ceis
+      columns:
+        - name: 'CADASTRO'
+          bronze_name: cadastro
+          type: string
+        - name: 'CÓDIGO DA SANÇÃO'
+          bronze_name: codigo_da_sancao
+          type: string
+        - name: 'TIPO DE PESSOA'
+          bronze_name: tipo_de_pessoa
+          type: string
+        - name: 'CPF OU CNPJ DO SANCIONADO'
+          bronze_name: cpf_ou_cnpj_do_sancionado
+          type: string
+        - name: 'NOME DO SANCIONADO'
+          bronze_name: nome_do_sancionado
+          type: string
+        - name: 'NOME INFORMADO PELO ÓRGÃO SANCIONADOR'
+          bronze_name: nome_informado_pelo_orgao_sancionador
+          type: string
+        - name: 'RAZÃO SOCIAL - CADASTRO RECEITA'
+          bronze_name: razao_social_cadastro_receita
+          type: string
+        - name: 'NOME FANTASIA - CADASTRO RECEITA'
+          bronze_name: nome_fantasia_cadastro_receita
+          type: string
+        - name: 'NÚMERO DO PROCESSO'
+          bronze_name: numero_do_processo
+          type: string
+        - name: 'CATEGORIA DA SANÇÃO'
+          bronze_name: categoria_da_sancao
+          type: string
+        - name: 'DATA INÍCIO SANÇÃO'
+          bronze_name: data_inicio_sancao
+          type: date
+        - name: 'DATA FINAL SANÇÃO'
+          bronze_name: data_final_sancao
+          type: date
+        - name: 'DATA PUBLICAÇÃO'
+          bronze_name: data_publicacao
+          type: date
+        - name: 'PUBLICAÇÃO'
+          bronze_name: publicacao
+          type: string
+        - name: 'DETALHAMENTO DO MEIO DE PUBLICAÇÃO'
+          bronze_name: detalhamento_do_meio_de_publicacao
+          type: string
+        - name: 'DATA DO TRÂNSITO EM JULGADO'
+          bronze_name: data_do_transito_em_julgado
+          type: date
+        - name: 'ABRAGÊNCIA DA SANÇÃO'
+          bronze_name: abragencia_da_sancao
+          type: string
+        - name: 'ÓRGÃO SANCIONADOR'
+          bronze_name: orgao_sancionador
+          type: string
+        - name: 'UF ÓRGÃO SANCIONADOR'
+          bronze_name: uf_orgao_sancionador
+          type: string
+        - name: 'ESFERA ÓRGÃO SANCIONADOR'
+          bronze_name: esfera_orgao_sancionador
+          type: string
+        - name: 'FUNDAMENTAÇÃO LEGAL'
+          bronze_name: fundamentacao_legal
+          type: string
+        - name: 'DATA ORIGEM INFORMAÇÃO'
+          bronze_name: data_origem_informacao
+          type: date
+        - name: 'ORIGEM INFORMAÇÕES'
+          bronze_name: origem_informacoes
+          type: string
+        - name: 'OBSERVAÇÕES'
+          bronze_name: observacoes
+          type: string
+  cnep:
+    - name: cnep
+      columns:
+        - name: 'CADASTRO'
+          bronze_name: cadastro
+          type: string
+        - name: 'CÓDIGO DA SANÇÃO'
+          bronze_name: codigo_da_sancao
+          type: string
+        - name: 'TIPO DE PESSOA'
+          bronze_name: tipo_de_pessoa
+          type: string
+        - name: 'CPF OU CNPJ DO SANCIONADO'
+          bronze_name: cpf_ou_cnpj_do_sancionado
+          type: string
+        - name: 'NOME DO SANCIONADO'
+          bronze_name: nome_do_sancionado
+          type: string
+        - name: 'NOME INFORMADO PELO ÓRGÃO SANCIONADOR'
+          bronze_name: nome_informado_pelo_orgao_sancionador
+          type: string
+        - name: 'RAZÃO SOCIAL - CADASTRO RECEITA'
+          bronze_name: razao_social_cadastro_receita
+          type: string
+        - name: 'NOME FANTASIA - CADASTRO RECEITA'
+          bronze_name: nome_fantasia_cadastro_receita
+          type: string
+        - name: 'NÚMERO DO PROCESSO'
+          bronze_name: numero_do_processo
+          type: string
+        - name: 'CATEGORIA DA SANÇÃO'
+          bronze_name: categoria_da_sancao
+          type: string
+        - name: 'VALOR DA MULTA'
+          bronze_name: valor_da_multa
+          type: decimal(18,2)
+        - name: 'DATA INÍCIO SANÇÃO'
+          bronze_name: data_inicio_sancao
+          type: date
+        - name: 'DATA FINAL SANÇÃO'
+          bronze_name: data_final_sancao
+          type: date
+        - name: 'DATA PUBLICAÇÃO'
+          bronze_name: data_publicacao
+          type: date
+        - name: 'PUBLICAÇÃO'
+          bronze_name: publicacao
+          type: string
+        - name: 'DETALHAMENTO DO MEIO DE PUBLICAÇÃO'
+          bronze_name: detalhamento_do_meio_de_publicacao
+          type: string
+        - name: 'DATA DO TRÂNSITO EM JULGADO'
+          bronze_name: data_do_transito_em_julgado
+          type: date
+        - name: 'ABRAGÊNCIA DA SANÇÃO'
+          bronze_name: abragencia_da_sancao
+          type: string
+        - name: 'ÓRGÃO SANCIONADOR'
+          bronze_name: orgao_sancionador
+          type: string
+        - name: 'UF ÓRGÃO SANCIONADOR'
+          bronze_name: uf_orgao_sancionador
+          type: string
+        - name: 'ESFERA ÓRGÃO SANCIONADOR'
+          bronze_name: esfera_orgao_sancionador
+          type: string
+        - name: 'FUNDAMENTAÇÃO LEGAL'
+          bronze_name: fundamentacao_legal
+          type: string
+        - name: 'DATA ORIGEM INFORMAÇÃO'
+          bronze_name: data_origem_informacao
+          type: date
+        - name: 'ORIGEM INFORMAÇÕES'
+          bronze_name: origem_informacoes
+          type: string
+        - name: 'OBSERVAÇÕES'
+          bronze_name: observacoes
+          type: string

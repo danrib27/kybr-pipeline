@@ -6,9 +6,26 @@ The file is `config.yaml` in the current directory, unless the
 
 import os
 from pathlib import Path
+from typing import TypedDict
 
 import humanfriendly
 import yaml
+
+
+class Column(TypedDict):
+    """A column of a bronze table, as in docs/data/."""
+
+    name: str
+    bronze_name: str
+    type: str
+
+
+class Table(TypedDict):
+    """A bronze table: one CSV file inside a data set's zip."""
+
+    name: str
+    columns: list[Column]
+
 
 CONFIG_PATH = Path(os.environ.get("KYBR_PIPELINE_CONFIG", "config.yaml"))
 
@@ -21,3 +38,7 @@ SNAPSHOT_ENDPOINTS: list[str] = _config["requests"]["endpoints"]["snapshot"]
 CHUNK_SIZE: int = humanfriendly.parse_size(_config["requests"]["chunk_size"])
 TMP_DIR = Path(_config["requests"]["tmp_dir"])
 BUCKET_NAME: str = _config["s3"]["bucket_name"]
+COMPRAS_SCHEMAS: list[Table] = _config["schemas"]["compras"]
+LICITACOES_SCHEMAS: list[Table] = _config["schemas"]["licitacoes"]
+CEIS_SCHEMAS: list[Table] = _config["schemas"]["ceis"]
+CNEP_SCHEMAS: list[Table] = _config["schemas"]["cnep"]
